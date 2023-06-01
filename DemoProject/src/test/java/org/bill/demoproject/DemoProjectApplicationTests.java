@@ -28,6 +28,26 @@ class DemoProjectApplicationTests {
     Logger log = LogManager.getLogger(DemoProjectApplicationTests.class);
 
     @Test
+    public void queryUserList() throws Exception {
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        //创建UserMapper对象，mybatis自动生成mapper代理对象
+        UserEntityMapper userEntityMapper = sqlSession.getMapper(UserEntityMapper.class);
+        //调用userMapper的方法
+        UserEntity userEntity = new UserEntity();
+        List<UserEntity> list = userEntityMapper.queryUserList(userEntity);
+        if(CollectionUtils.isEmpty(list)){
+            // 记录error级别的信息
+        }else{
+            System.out.println(list);
+            // 记录info级别的信息
+            log.info(">>queryUserList用户列表查询测试成功");
+        }
+    }
+
+    @Test
     public void selectUserInfo() throws Exception {
         String resource = "mybatis-config.xml";
         InputStream inputStream = Resources.getResourceAsStream(resource);

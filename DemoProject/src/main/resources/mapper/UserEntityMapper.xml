@@ -140,7 +140,7 @@
 
   <!-- Search/Query All User -->
   <select id="queryUserList" parameterType="java.lang.String" resultType="org.bill.demoproject.dao.entity.UserEntity">
-    SELECT *
+    SELECT id,username,`password`,status,created_by,creation_date,last_updated_by,last_update_date,start_time as "startTime",stop_time as "stopTime"
     FROM user_info
     WHERE status = "1"
   </select>
