@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8085
 
 spring:
   datasource:
@@ -9,5 +9,8 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 mybatis:
-  type-aliases-package: org.bill.demoproject
+  type-aliases-package: org.bill.demoproject.dao.entity
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    cache-enabled: true
 
