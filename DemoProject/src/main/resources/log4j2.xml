@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss}[ %p ]%m%n"/>
+        </Console>
+        <File name="File" fileName="./logs/info.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss}[ %p ]%m%n"/>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Logger name="org.apache.ibatis" level="WARN"/>
+        <Logger name="java.sql" level="WARN"/>
+        <Logger name="org.springframework" level="WARN"/>
+        <Logger name="druid.sql" level="DEBUG"/>
+        <Root level="DEBUG">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
+        </Root>
+    </Loggers>
+</Configuration>

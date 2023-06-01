@@ -27,6 +27,10 @@ public interface UserEntityMapper {
      * Delete user by id
      * */
     int deleteUserById(UserEntity userEntity);
+    /**
+     * Delete user by name
+     * */
+    int deleteUserByName(UserEntity userEntity);
 
     /**
      * edit user information

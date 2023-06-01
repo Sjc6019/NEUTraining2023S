@@ -45,6 +45,31 @@ public class UserController {
     }
 
     /**
+     * Query user list
+     * */
+    @RequestMapping(value = "/queryUserList", method = RequestMethod.POST, headers = "Accept=application/json")
+    public HttpResponseEntity queryUserList(@RequestBody UserEntity userEntity) {
+        HttpResponseEntity httpResponseEntity = new HttpResponseEntity();
+        try {
+            List<UserEntity> hasUser = userService.queryUserList(userEntity);
+            if (CollectionUtils.isEmpty(hasUser)) {
+                httpResponseEntity.setCode("0");
+                httpResponseEntity.setData(hasUser.get(0));
+                httpResponseEntity.setMessage("fail");
+            } else {
+                httpResponseEntity.setCode("666");
+                httpResponseEntity.setData(hasUser);
+                httpResponseEntity.setMessage("success");
+            }
+
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return httpResponseEntity;
+    }
+
+    /**
      * Add user
      * */
     @RequestMapping(value = "/addUserInfo", method = RequestMethod.POST, headers = "Accept=application/json")

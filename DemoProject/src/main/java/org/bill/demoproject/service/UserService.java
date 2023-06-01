@@ -60,4 +60,12 @@ public class UserService {
         return userResult;
     }
 
+    /**
+     * Delete user by name
+     */
+    public int deleteUserByName(UserEntity userEntity) {
+        int userResult = userEntityMapper.deleteUserByName(userEntity);
+        return userResult;
+    }
+
 }
