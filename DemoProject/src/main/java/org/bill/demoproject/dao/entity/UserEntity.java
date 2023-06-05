@@ -1,5 +1,7 @@
 package org.bill.demoproject.dao.entity;
 
+import org.bill.demoproject.dao.UserEntityMapper;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -14,6 +16,7 @@ public class UserEntity implements Serializable {
     private Date creationDate;
     private String lastUpdatedBy;
     private Date lastUpdateDate;
+
 
     public String getId() {
         return id;

@@ -15,6 +15,10 @@ public class UserService {
     @Autowired
     private UserEntityMapper userEntityMapper;
 
+    public UserService(UserEntityMapper userEntityMapper) {
+        this.userEntityMapper = userEntityMapper;
+    }
+
     /**
      * Find user for login
      */
