@@ -139,7 +139,7 @@
     <!--  </select>-->
 
     <!-- Search/Query All User -->
-    <select id="queryUserList" parameterType="java.lang.String"
+    <select id="queryUserList" parameterType="org.bill.demoproject.dao.entity.UserEntity"
             resultType="org.bill.demoproject.dao.entity.UserEntity">
         SELECT id,
                username,
@@ -152,7 +152,7 @@
                start_time as "startTime",
                stop_time  as "stopTime"
         FROM user_info
-        WHERE status = "1"
+        WHERE status = "1" AND username LIKE CONCAT('%', #{username, jdbcType=VARCHAR}, '%')
     </select>
 
     <!-- Insert -->
