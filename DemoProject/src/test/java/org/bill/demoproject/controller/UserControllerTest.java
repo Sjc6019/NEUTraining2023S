@@ -62,8 +62,8 @@ class UserControllerTest {
     void addUserInfo() {
         UserEntity userEntity = new UserEntity();
         userEntity.setUsername("testAdd");
+        userEntity.setStatus("1");
         HttpResponseEntity httpResponseEntity = userController.addUserInfo(userEntity);
-        System.out.println(httpResponseEntity.getData());
         HttpResponseEntity httpResponseEntity1 = userController.queryUserList(userEntity);
         ArrayList<UserEntity> resultList = (ArrayList<UserEntity>) httpResponseEntity1.getData();
         String result = resultList.get(0).toString();
@@ -79,10 +79,13 @@ class UserControllerTest {
     void modifyUserInfo() {
         UserEntity userEntity = new UserEntity();
         userEntity.setUsername("testModify");
+        userEntity.setStatus("1");
         HttpResponseEntity httpResponseEntity = userController.addUserInfo(userEntity);
         System.out.println(httpResponseEntity.getData());
         HttpResponseEntity httpResponseEntity1 = userController.queryUserList(userEntity);
-        String result = httpResponseEntity1.getData().toString();
+        ArrayList<UserEntity> resultList = (ArrayList<UserEntity>) httpResponseEntity1.getData();
+        String result = resultList.get(0).toString();
+        System.out.println(result);
         String id = result.substring(result.indexOf("\"id\":")+6,result.indexOf(", \"username\"")-1);
         System.out.println(id);
         userEntity.setId(id);
@@ -92,10 +95,12 @@ class UserControllerTest {
     void deleteUserById() {
         UserEntity userEntity = new UserEntity();
         userEntity.setUsername("testDelete");
+        userEntity.setStatus("1");
         HttpResponseEntity httpResponseEntity = userController.addUserInfo(userEntity);
         System.out.println(httpResponseEntity.getData());
         HttpResponseEntity httpResponseEntity1 = userController.queryUserList(userEntity);
-        String result = httpResponseEntity1.getData().toString();
+        ArrayList<UserEntity> resultList = (ArrayList<UserEntity>) httpResponseEntity1.getData();
+        String result = resultList.get(0).toString();
         String id = result.substring(result.indexOf("\"id\":")+6,result.indexOf(", \"username\"")-1);
         System.out.println(id);
         userEntity.setId(id);
