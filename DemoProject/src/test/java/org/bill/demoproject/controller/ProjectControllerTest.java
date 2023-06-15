@@ -31,15 +31,22 @@ class ProjectControllerTest {
         ProjectEntity projectEntity = new ProjectEntity();
         projectEntity.setProjectName("test");
         HttpResponseEntity httpResponseEntity = projectController.queryProjectList(projectEntity);
-
+        System.out.println(httpResponseEntity);
     }
 
     @Test
     void addProjectInfo() {
         ProjectEntity projectEntity = new ProjectEntity();
-        projectEntity.setProjectName("test-add");
-
+        projectEntity.setProjectName("test-junit-add");
         HttpResponseEntity httpResponseEntity = projectController.addProjectInfo(projectEntity);
+        System.out.println(httpResponseEntity.getData());
+        HttpResponseEntity httpResponseEntity1 = projectController.queryProjectList(projectEntity);
+        String result = httpResponseEntity1.getData().toString();
+        String id = result.substring(result.indexOf("\"id\":")+6,result.indexOf(", \"userId\"")-1);
+        System.out.println(id);
+        projectEntity.setId(id);
+        HttpResponseEntity httpResponseEntity2 = projectController.deleteProjectById(projectEntity);
+        System.out.println(httpResponseEntity2.getData());
 
     }
 
