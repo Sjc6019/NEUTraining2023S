@@ -17,6 +17,7 @@ const fetchProjectInfo = (id) => {
     dataType: "json",
     contentType: "application/json",
     success(res) {
+      console.log("res", res)
       let info = res.data[0]
       console.log(info, 'res')
       $('#projectName').text(info.projectName)

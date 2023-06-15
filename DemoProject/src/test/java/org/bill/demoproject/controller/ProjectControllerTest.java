@@ -1,52 +1,36 @@
 package org.bill.demoproject.controller;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.bill.demoproject.beans.HttpResponseEntity;
-import org.bill.demoproject.dao.entity.UserEntity;
-import org.bill.demoproject.service.UserService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.contains;
-import static org.mockito.Mockito.when;
+import java.util.concurrent.atomic.AtomicReference;
+
+import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.ArrayList;
-import java.util.List;
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
-class UserControllerTest {
-
+class ProjectControllerTest {
     @Autowired
     private MockMvc mockMvc;
-
     @Test
-    void userLogin() {
+    void queryProjectList() {
         MvcResult mvcResult = null;
         try {
-            mvcResult = mockMvc.perform(post("/admin/userLogin")
+            mvcResult = mockMvc.perform(post("/queryProjectList")
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content("{\"username\":\"admin\",\"password\":\"admin\"}"))
+                    .content("{\"projectName\":\"\"}"))
                     .andExpect(status().isOk())
                     .andExpect(content().string(containsString("666")))
                     .andDo(MockMvcResultHandlers.print())
@@ -55,9 +39,9 @@ class UserControllerTest {
             e.printStackTrace();
         }
         try {
-            mvcResult = mockMvc.perform(post("/admin/userLogin")
+            mvcResult = mockMvc.perform(post("/queryProjectList")
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content("{\"username\":\"admin\",\"password\":\"error\"}"))
+                    .content("{\"projectName\":\"error\"}"))
                     .andExpect(status().isOk())
                     .andExpect(content().string(containsString("0")))
                     .andDo(MockMvcResultHandlers.print())
@@ -67,36 +51,13 @@ class UserControllerTest {
         }
     }
 
-
     @Test
-    void queryUserList() {
+    void addProjectInfo() {
         MvcResult mvcResult = null;
         try {
-            mvcResult = mockMvc.perform(post("/admin/queryUserList")
+            mvcResult = mockMvc.perform(post("/addProjectInfo")
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content("{\"username\":\"admin\"}"))
-                    .andExpect(status().isOk())
-                    .andExpect(content().string(containsString("666")))
-                    .andDo(MockMvcResultHandlers.print())
-                    .andReturn();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            mvcResult = mockMvc.perform(post("/admin/queryUserList")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content("{\"username\":\"test03\"}"))
-                    .andExpect(status().isOk())
-                    .andExpect(content().string(containsString("666")))
-                    .andDo(MockMvcResultHandlers.print())
-                    .andReturn();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            mvcResult = mockMvc.perform(post("/admin/queryUserList")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content("{\"username\":\"\"}"))
+                    .content("{\"projectName\":\"test\",\"projectContent\":\"test\"}"))
                     .andExpect(status().isOk())
                     .andExpect(content().string(containsString("666")))
                     .andDo(MockMvcResultHandlers.print())
@@ -107,13 +68,12 @@ class UserControllerTest {
     }
 
     @Test
-    void addUserInfo() {
+    void modifyProjectInfo() {
         MvcResult mvcResult = null;
         try {
-            mvcResult = mockMvc.perform(post("/admin/addUserInfo")
+            mvcResult = mockMvc.perform(post("/modifyProjectInfo")
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content("{\"username\":\"test09\",\"password\":\"123123\",\"startTime\":1685610377000,\"stopTime\":1688137598000}")
-                    .accept(MediaType.APPLICATION_JSON))
+                    .content("{\"id\":\"20ee9e067a71495287b4631aa821998b\",\"projectName\":\"unit-test\",\"projectContent\":\"unit-test\"}"))
                     .andExpect(status().isOk())
                     .andExpect(content().string(containsString("666")))
                     .andDo(MockMvcResultHandlers.print())
@@ -121,27 +81,21 @@ class UserControllerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     @Test
-    void modifyUserInfo() {
+    void deleteProjectById() {
         MvcResult mvcResult = null;
         try {
-            mvcResult = mockMvc.perform(post("/admin/modifyUserInfo")
+            mvcResult = mockMvc.perform(post("/deleteProjectById")
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content("{\"id\":2,\"username\":\"test-mod\",\"password\":\"123123\",\"startTime\":1685610377000,\"stopTime\":1688137598000}")
-                    .accept(MediaType.APPLICATION_JSON))
+                    .content("{\"id\":\"6\"}"))
                     .andExpect(status().isOk())
-                    .andExpect(content().string(containsString("10")))
+                    .andExpect(content().string(containsString("666")))
                     .andDo(MockMvcResultHandlers.print())
                     .andReturn();
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @Test
-    void deleteUserById() {
     }
 }
