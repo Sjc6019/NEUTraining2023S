@@ -1,5 +1,5 @@
 onload = () => {
-  $('#headerUsername').text($util.getItem('userInfo').username)
+  $('#headerUsername').text($util.getItem('userInfo')[0].username)
   $('#headerDivB').text('用户管理')
   fetchUserList()
 }
@@ -11,7 +11,7 @@ const fetchUserList = () => {
   let params = {
     pageNum,
     pageSize: 10,
-    userName: $('#username').val()
+    username: $('#username').val()
   }
   $.ajax({
     url: API_BASE_URL + '/admin/queryUserList',

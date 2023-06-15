@@ -42,26 +42,64 @@ class UserControllerTest {
 
     @Test
     void userLogin() {
-
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUsername("test");
+        userEntity.setPassword("test");
+        HttpResponseEntity httpResponseEntity = userController.userLogin(userEntity);
+        System.out.println(httpResponseEntity);
     }
 
 
     @Test
     void queryUserList() {
-
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUsername("test");
+        HttpResponseEntity httpResponseEntityUser = userController.queryUserList(userEntity);
+        System.out.println(httpResponseEntityUser);
     }
 
     @Test
     void addUserInfo() {
-
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUsername("testAdd");
+        HttpResponseEntity httpResponseEntity = userController.addUserInfo(userEntity);
+        System.out.println(httpResponseEntity.getData());
+        HttpResponseEntity httpResponseEntity1 = userController.queryUserList(userEntity);
+        ArrayList<UserEntity> resultList = (ArrayList<UserEntity>) httpResponseEntity1.getData();
+        String result = resultList.get(0).toString();
+        System.out.println(result);
+        String id = result.substring(result.indexOf("\"id\":")+6,result.indexOf(", \"username\"")-1);
+        System.out.println(id);
+        userEntity.setId(id);
+        HttpResponseEntity httpResponseEntity2 = userController.deleteUserById(userEntity);
+        System.out.println(httpResponseEntity2.getData());
     }
 
     @Test
     void modifyUserInfo() {
-
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUsername("testModify");
+        HttpResponseEntity httpResponseEntity = userController.addUserInfo(userEntity);
+        System.out.println(httpResponseEntity.getData());
+        HttpResponseEntity httpResponseEntity1 = userController.queryUserList(userEntity);
+        String result = httpResponseEntity1.getData().toString();
+        String id = result.substring(result.indexOf("\"id\":")+6,result.indexOf(", \"username\"")-1);
+        System.out.println(id);
+        userEntity.setId(id);
     }
 
     @Test
     void deleteUserById() {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUsername("testDelete");
+        HttpResponseEntity httpResponseEntity = userController.addUserInfo(userEntity);
+        System.out.println(httpResponseEntity.getData());
+        HttpResponseEntity httpResponseEntity1 = userController.queryUserList(userEntity);
+        String result = httpResponseEntity1.getData().toString();
+        String id = result.substring(result.indexOf("\"id\":")+6,result.indexOf(", \"username\"")-1);
+        System.out.println(id);
+        userEntity.setId(id);
+        HttpResponseEntity httpResponseEntity2 = userController.deleteUserById(userEntity);
+        System.out.println(httpResponseEntity2.getData());
     }
 }
