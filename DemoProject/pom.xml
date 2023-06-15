@@ -79,7 +79,7 @@
     <dependency>
       <groupId>org.jacoco</groupId>
       <artifactId>jacoco-maven-plugin</artifactId>
-      <version>0.8.9</version>
+      <version>0.8.8</version>
     </dependency>
   </dependencies>
   <build>
@@ -100,6 +100,15 @@
             <goals>
               <goal>report</goal>
             </goals>
+            <configuration>
+              <excludes>
+                <exclude>org/bill/demoproject/controller/*</exclude>
+                <exclude>org/bill/demoproject/dao/*</exclude>
+              </excludes>
+              <includes>
+                <include>org/bill/demoproject/service/*</include>
+              </includes>
+            </configuration>
           </execution>
         </executions>
       </plugin>

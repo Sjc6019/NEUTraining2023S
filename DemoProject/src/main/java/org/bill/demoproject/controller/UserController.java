@@ -53,13 +53,13 @@ public class UserController {
         try {
             List<UserEntity> hasUser = userService.queryUserList(userEntity);
             if (CollectionUtils.isEmpty(hasUser)) {
-                httpResponseEntity.setCode("0");
-                httpResponseEntity.setData(null);
-                httpResponseEntity.setMessage("fail");
+                httpResponseEntity.setCode("0"); // 0 means query fail
+                httpResponseEntity.setData(null); // null means no data
+                httpResponseEntity.setMessage("fail"); // fail means fail
             } else {
-                httpResponseEntity.setCode("666");
-                httpResponseEntity.setData(hasUser);
-                httpResponseEntity.setMessage("success");
+                httpResponseEntity.setCode("666"); // 666 means success
+                httpResponseEntity.setData(hasUser); // hasUser means has user
+                httpResponseEntity.setMessage("success"); // success means success
             }
 
         }catch (Exception e) {
@@ -103,13 +103,13 @@ public class UserController {
         try {
             int result = userService.modifyUserInfo(userEntity);
             if (result !=0 ) {
-                httpResponseEntity.setCode("10");
-                httpResponseEntity.setData(result);
-                httpResponseEntity.setMessage("success");
+                httpResponseEntity.setCode("10"); // 10 means modify success
+                httpResponseEntity.setData(result); // result means result
+                httpResponseEntity.setMessage("success"); // success means success
             } else {
-                httpResponseEntity.setCode("0");
-                httpResponseEntity.setData(0);
-                httpResponseEntity.setMessage("fail");
+                httpResponseEntity.setCode("0"); // 0 means modify fail
+                httpResponseEntity.setData(0); // 0 means no data
+                httpResponseEntity.setMessage("fail"); // fail means fail
             }
 
         }catch (Exception e) {

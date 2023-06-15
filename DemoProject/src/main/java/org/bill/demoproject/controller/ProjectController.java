@@ -41,7 +41,7 @@ public class ProjectController {
 
     @RequestMapping(value = "/addProjectInfo", method = RequestMethod.POST, headers = "Accept=application/json")
     public HttpResponseEntity addProjectInfo(@RequestBody ProjectEntity projectEntity) {
-        HttpResponseEntity httpResponseEntity = new HttpResponseEntity();
+        HttpResponseEntity httpResponseEntity1 = new HttpResponseEntity();
         projectEntity.setId(UUIDUtil.getOneUUID());
         Date now = new Date();
         projectEntity.setCreationDate(now);
@@ -52,24 +52,24 @@ public class ProjectController {
         try {
             int result = projectService.addProjectInfo(projectEntity);
             if (result == 0) {
-                httpResponseEntity.setCode("0");
-                httpResponseEntity.setData(null);
-                httpResponseEntity.setMessage("fail");
+                httpResponseEntity1.setCode("0");
+                httpResponseEntity1.setData(null);
+                httpResponseEntity1.setMessage("fail");
             } else {
-                httpResponseEntity.setCode("666");
-                httpResponseEntity.setData(null);
-                httpResponseEntity.setMessage("success");
+                httpResponseEntity1.setCode("666");
+                httpResponseEntity1.setData(null);
+                httpResponseEntity1.setMessage("success");
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
-        return httpResponseEntity;
+        return httpResponseEntity1;
     }
 
     @RequestMapping(value = "/modifyProjectInfo", method = RequestMethod.POST, headers = "Accept=application/json")
     public HttpResponseEntity modifyProjectInfo(@RequestBody ProjectEntity projectEntity) {
-        HttpResponseEntity httpResponseEntity = new HttpResponseEntity();
+        HttpResponseEntity httpResponseEntity2 = new HttpResponseEntity();
         Date now = new Date();
         projectEntity.setLastUpdateDate(now);
         projectEntity.setLastUpdatedBy("admin");
@@ -77,40 +77,40 @@ public class ProjectController {
             int result = projectService.modifyProjectInfo(projectEntity);
 //            System.out.println(result);
             if (result == 0) {
-                httpResponseEntity.setCode("0");
-                httpResponseEntity.setData(null);
-                httpResponseEntity.setMessage("fail");
+                httpResponseEntity2.setCode("0");
+                httpResponseEntity2.setData(null);
+                httpResponseEntity2.setMessage("fail");
             } else {
-                httpResponseEntity.setCode("666");
-                httpResponseEntity.setData(null);
-                httpResponseEntity.setMessage("success");
+                httpResponseEntity2.setCode("666");
+                httpResponseEntity2.setData(null);
+                httpResponseEntity2.setMessage("success");
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
-        return httpResponseEntity;
+        return httpResponseEntity2;
     }
 
     @RequestMapping(value = "/deleteProjectById", method = RequestMethod.POST, headers = "Accept=application/json")
     public HttpResponseEntity deleteProjectById(@RequestBody ProjectEntity projectEntity) {
-        HttpResponseEntity httpResponseEntity = new HttpResponseEntity();
+        HttpResponseEntity httpResponseEntity3 = new HttpResponseEntity();
         try {
             int result = projectService.deleteProjectById(projectEntity);
             if (result == 0) {
-                httpResponseEntity.setCode("0");
-                httpResponseEntity.setData(null);
-                httpResponseEntity.setMessage("fail");
+                httpResponseEntity3.setCode("0");
+                httpResponseEntity3.setData(null);
+                httpResponseEntity3.setMessage("fail");
             } else {
-                httpResponseEntity.setCode("666");
-                httpResponseEntity.setData(null);
-                httpResponseEntity.setMessage("success");
+                httpResponseEntity3.setCode("666");
+                httpResponseEntity3.setData(null);
+                httpResponseEntity3.setMessage("success");
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
-        return httpResponseEntity;
+        return httpResponseEntity3;
     }
     
 }

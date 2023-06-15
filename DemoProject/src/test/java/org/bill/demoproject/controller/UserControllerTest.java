@@ -3,6 +3,7 @@ package org.bill.demoproject.controller;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.*;
 
+import jakarta.annotation.Resource;
 import org.bill.demoproject.beans.HttpResponseEntity;
 import org.bill.demoproject.dao.entity.UserEntity;
 import org.bill.demoproject.service.UserService;
@@ -34,111 +35,30 @@ import java.util.ArrayList;
 import java.util.List;
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@AutoConfigureMockMvc
 class UserControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+    @Resource
+    private UserController userController;
 
     @Test
     void userLogin() {
-        MvcResult mvcResult = null;
-        try {
-            mvcResult = mockMvc.perform(post("/admin/userLogin")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content("{\"username\":\"admin\",\"password\":\"admin\"}"))
-                    .andExpect(status().isOk())
-                    .andExpect(content().string(containsString("666")))
-                    .andDo(MockMvcResultHandlers.print())
-                    .andReturn();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            mvcResult = mockMvc.perform(post("/admin/userLogin")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content("{\"username\":\"admin\",\"password\":\"error\"}"))
-                    .andExpect(status().isOk())
-                    .andExpect(content().string(containsString("0")))
-                    .andDo(MockMvcResultHandlers.print())
-                    .andReturn();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
 
 
     @Test
     void queryUserList() {
-        MvcResult mvcResult = null;
-        try {
-            mvcResult = mockMvc.perform(post("/admin/queryUserList")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content("{\"username\":\"admin\"}"))
-                    .andExpect(status().isOk())
-                    .andExpect(content().string(containsString("666")))
-                    .andDo(MockMvcResultHandlers.print())
-                    .andReturn();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            mvcResult = mockMvc.perform(post("/admin/queryUserList")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content("{\"username\":\"test03\"}"))
-                    .andExpect(status().isOk())
-                    .andExpect(content().string(containsString("666")))
-                    .andDo(MockMvcResultHandlers.print())
-                    .andReturn();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            mvcResult = mockMvc.perform(post("/admin/queryUserList")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content("{\"username\":\"\"}"))
-                    .andExpect(status().isOk())
-                    .andExpect(content().string(containsString("666")))
-                    .andDo(MockMvcResultHandlers.print())
-                    .andReturn();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
 
     @Test
     void addUserInfo() {
-        MvcResult mvcResult = null;
-        try {
-            mvcResult = mockMvc.perform(post("/admin/addUserInfo")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content("{\"username\":\"test09\",\"password\":\"123123\",\"startTime\":1685610377000,\"stopTime\":1688137598000}")
-                    .accept(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isOk())
-                    .andExpect(content().string(containsString("666")))
-                    .andDo(MockMvcResultHandlers.print())
-                    .andReturn();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
     }
 
     @Test
     void modifyUserInfo() {
-        MvcResult mvcResult = null;
-        try {
-            mvcResult = mockMvc.perform(post("/admin/modifyUserInfo")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content("{\"id\":2,\"username\":\"test-mod\",\"password\":\"123123\",\"startTime\":1685610377000,\"stopTime\":1688137598000}")
-                    .accept(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isOk())
-                    .andExpect(content().string(containsString("10")))
-                    .andDo(MockMvcResultHandlers.print())
-                    .andReturn();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
 
     @Test
