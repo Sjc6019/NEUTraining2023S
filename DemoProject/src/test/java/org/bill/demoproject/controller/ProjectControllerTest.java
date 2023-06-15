@@ -47,16 +47,45 @@ class ProjectControllerTest {
         projectEntity.setId(id);
         HttpResponseEntity httpResponseEntity2 = projectController.deleteProjectById(projectEntity);
         System.out.println(httpResponseEntity2.getData());
-
     }
 
     @Test
     void modifyProjectInfo() {
+        ProjectEntity projectEntity = new ProjectEntity();
+        projectEntity.setProjectName("test-junit-modify");
+        projectEntity.setProjectContent("test-junit-modify");
+        HttpResponseEntity httpResponseEntity = projectController.addProjectInfo(projectEntity);
+        System.out.println(httpResponseEntity.getData());
+        HttpResponseEntity httpResponseEntity1 = projectController.queryProjectList(projectEntity);
+        String result = httpResponseEntity1.getData().toString();
+        System.out.println(result);
+        String id = result.substring(result.indexOf("\"id\":")+6,result.indexOf(", \"userId\"")-1);
+        System.out.println(id);
+        projectEntity.setId(id);
+        projectEntity.setProjectName("test-junit-modify-modify");
+        projectEntity.setProjectContent("test-junit-modify-modify");
+        HttpResponseEntity httpResponseEntity2 = projectController.modifyProjectInfo(projectEntity);
+        System.out.println(httpResponseEntity2.getData());
+        HttpResponseEntity httpResponseEntity3 = projectController.queryProjectList(projectEntity);
+        System.out.println(httpResponseEntity3.getData());
+        HttpResponseEntity httpResponseEntity4 = projectController.deleteProjectById(projectEntity);
+        System.out.println(httpResponseEntity4.getData());
 
     }
 
     @Test
     void deleteProjectById() {
-
+        ProjectEntity projectEntity = new ProjectEntity();
+        projectEntity.setProjectName("test-junit-delete");
+        HttpResponseEntity httpResponseEntity = projectController.addProjectInfo(projectEntity);
+        System.out.println(httpResponseEntity.getData());
+        HttpResponseEntity httpResponseEntity1 = projectController.queryProjectList(projectEntity);
+        String result = httpResponseEntity1.getData().toString();
+        System.out.println(result);
+        String id = result.substring(result.indexOf("\"id\":")+6,result.indexOf(", \"userId\"")-1);
+        System.out.println(id);
+        projectEntity.setId(id);
+        HttpResponseEntity httpResponseEntity2 = projectController.deleteProjectById(projectEntity);
+        System.out.println(httpResponseEntity2.getData());
     }
 }
