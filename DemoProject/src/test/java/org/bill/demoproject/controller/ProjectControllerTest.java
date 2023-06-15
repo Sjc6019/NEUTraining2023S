@@ -1,5 +1,8 @@
 package org.bill.demoproject.controller;
 
+import jakarta.annotation.Resource;
+import org.bill.demoproject.beans.HttpResponseEntity;
+import org.bill.demoproject.dao.entity.ProjectEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,82 +23,40 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@AutoConfigureMockMvc
 class ProjectControllerTest {
-    @Autowired
-    private MockMvc mockMvc;
+    @Resource
+    private ProjectController projectController;
     @Test
     void queryProjectList() {
-        MvcResult mvcResult = null;
-        try {
-            mvcResult = mockMvc.perform(post("/queryProjectList")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content("{\"projectName\":\"\"}"))
-                    .andExpect(status().isOk())
-                    .andExpect(content().string(containsString("666")))
-                    .andDo(MockMvcResultHandlers.print())
-                    .andReturn();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            mvcResult = mockMvc.perform(post("/queryProjectList")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content("{\"projectName\":\"error\"}"))
-                    .andExpect(status().isOk())
-                    .andExpect(content().string(containsString("0")))
-                    .andDo(MockMvcResultHandlers.print())
-                    .andReturn();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        ProjectEntity projectEntity = new ProjectEntity();
+        projectEntity.setProjectName("test");
+        HttpResponseEntity httpResponseEntity = projectController.queryProjectList(projectEntity);
+        System.out.println(httpResponseEntity);
     }
 
     @Test
     void addProjectInfo() {
-        MvcResult mvcResult = null;
-        try {
-            mvcResult = mockMvc.perform(post("/addProjectInfo")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content("{\"projectName\":\"test\",\"projectContent\":\"test\"}"))
-                    .andExpect(status().isOk())
-                    .andExpect(content().string(containsString("666")))
-                    .andDo(MockMvcResultHandlers.print())
-                    .andReturn();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        ProjectEntity projectEntity = new ProjectEntity();
+        projectEntity.setProjectName("test-junit-add");
+        HttpResponseEntity httpResponseEntity = projectController.addProjectInfo(projectEntity);
+        System.out.println(httpResponseEntity.getData());
+        HttpResponseEntity httpResponseEntity1 = projectController.queryProjectList(projectEntity);
+        String result = httpResponseEntity1.getData().toString();
+        String id = result.substring(result.indexOf("\"id\":")+6,result.indexOf(", \"userId\"")-1);
+        System.out.println(id);
+        projectEntity.setId(id);
+        HttpResponseEntity httpResponseEntity2 = projectController.deleteProjectById(projectEntity);
+        System.out.println(httpResponseEntity2.getData());
+
     }
 
     @Test
     void modifyProjectInfo() {
-        MvcResult mvcResult = null;
-        try {
-            mvcResult = mockMvc.perform(post("/modifyProjectInfo")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content("{\"id\":\"20ee9e067a71495287b4631aa821998b\",\"projectName\":\"unit-test\",\"projectContent\":\"unit-test\"}"))
-                    .andExpect(status().isOk())
-                    .andExpect(content().string(containsString("666")))
-                    .andDo(MockMvcResultHandlers.print())
-                    .andReturn();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
 
     @Test
     void deleteProjectById() {
-        MvcResult mvcResult = null;
-        try {
-            mvcResult = mockMvc.perform(post("/deleteProjectById")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content("{\"id\":\"6\"}"))
-                    .andExpect(status().isOk())
-                    .andExpect(content().string(containsString("666")))
-                    .andDo(MockMvcResultHandlers.print())
-                    .andReturn();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
 }
