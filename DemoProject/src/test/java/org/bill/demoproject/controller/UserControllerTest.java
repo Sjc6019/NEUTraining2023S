@@ -74,6 +74,9 @@ class UserControllerTest {
         userEntity.setId(id);
         HttpResponseEntity httpResponseEntity2 = userController.deleteUserById(userEntity);
         System.out.println(httpResponseEntity2.getData());
+        userEntity.setUsername(null);
+        HttpResponseEntity httpResponseEntity3 = userController.addUserInfo(userEntity);
+        System.out.println(httpResponseEntity3.getData());
     }
 
     @Test
