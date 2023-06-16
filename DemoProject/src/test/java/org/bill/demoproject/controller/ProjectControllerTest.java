@@ -74,8 +74,11 @@ class ProjectControllerTest {
         System.out.println(httpResponseEntity2.getData());
         HttpResponseEntity httpResponseEntity3 = projectController.queryProjectList(projectEntity);
         System.out.println(httpResponseEntity3.getData());
-        HttpResponseEntity httpResponseEntity4 = projectController.deleteProjectById(projectEntity);
+        projectEntity.setProjectName("test-junit-modify-modify-modify-modify-modify-modify-modify-modify-modify-modify-modify-modify-modify-modify-modify-modify-modify-modify-modify-modify-modify-modify-modify-modify-modify");
+        HttpResponseEntity httpResponseEntity4 = projectController.modifyProjectInfo(projectEntity);
         System.out.println(httpResponseEntity4.getData());
+        HttpResponseEntity httpResponseEntity5 = projectController.deleteProjectById(projectEntity);
+        System.out.println(httpResponseEntity5.getData());
 
     }
 
@@ -93,5 +96,9 @@ class ProjectControllerTest {
         projectEntity.setId(id);
         HttpResponseEntity httpResponseEntity2 = projectController.deleteProjectById(projectEntity);
         System.out.println(httpResponseEntity2.getData());
+        projectEntity.setId(null);
+        HttpResponseEntity httpResponseEntity3 = projectController.deleteProjectById(projectEntity);
+        System.out.println(httpResponseEntity3.getData());
+        System.out.println(httpResponseEntity3.getMessage());
     }
 }

@@ -66,17 +66,19 @@ public class ProjectController {
         Date now = new Date();
         projectEntity.setLastUpdateDate(now);
         projectEntity.setLastUpdatedBy("admin");
-
-        int result = projectService.modifyProjectInfo(projectEntity);
+        try {
+            int result = projectService.modifyProjectInfo(projectEntity);
 //            System.out.println(result);
-        if (result == 0) {
+            if (result != 0) {
+                httpResponseEntity2.setCode("666");
+                httpResponseEntity2.setData(null);
+                httpResponseEntity2.setMessage("success");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
             httpResponseEntity2.setCode("0");
             httpResponseEntity2.setData(null);
             httpResponseEntity2.setMessage("fail");
-        } else {
-            httpResponseEntity2.setCode("666");
-            httpResponseEntity2.setData(null);
-            httpResponseEntity2.setMessage("success");
         }
 
         return httpResponseEntity2;
@@ -87,6 +89,7 @@ public class ProjectController {
         HttpResponseEntity httpResponseEntity3 = new HttpResponseEntity();
 
         int result = projectService.deleteProjectById(projectEntity);
+        System.out.println(result);
         if (result == 0) {
             httpResponseEntity3.setCode("0");
             httpResponseEntity3.setData(null);
