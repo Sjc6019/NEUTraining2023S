@@ -64,6 +64,7 @@ class UserControllerTest {
         userEntity.setUsername("testAdd");
         userEntity.setStatus("1");
         HttpResponseEntity httpResponseEntity = userController.addUserInfo(userEntity);
+        System.out.println(httpResponseEntity.getData());
         HttpResponseEntity httpResponseEntity1 = userController.queryUserList(userEntity);
         ArrayList<UserEntity> resultList = (ArrayList<UserEntity>) httpResponseEntity1.getData();
         String result = resultList.get(0).toString();
@@ -89,6 +90,14 @@ class UserControllerTest {
         String id = result.substring(result.indexOf("\"id\":")+6,result.indexOf(", \"username\"")-1);
         System.out.println(id);
         userEntity.setId(id);
+        userEntity.setUsername("testModify1");
+        userEntity.setStatus("1");
+        HttpResponseEntity httpResponseEntity2 = userController.modifyUserInfo(userEntity);
+        System.out.println(httpResponseEntity2.getData());
+        HttpResponseEntity httpResponseEntity3 = userController.queryUserList(userEntity);
+        System.out.println(httpResponseEntity3.getData());
+        HttpResponseEntity httpResponseEntity4 = userController.deleteUserById(userEntity);
+        System.out.println(httpResponseEntity4.getData());
     }
 
     @Test
