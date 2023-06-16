@@ -46,7 +46,7 @@ class ProjectServiceTest {
             System.out.println(list);
             // 记录info级别的信息
         }
-
+        sqlSession.close();
     }
 
     @Test
@@ -74,6 +74,7 @@ class ProjectServiceTest {
             List<ProjectEntity> list = projectService.queryProjectList(projectEntity);
             System.out.println(list);
         }
+        sqlSession.close();
     }
 
     @Test
@@ -105,6 +106,7 @@ class ProjectServiceTest {
                 System.out.println(list1);
             }
         }
+        sqlSession.close();
     }
 
     @Test
@@ -134,5 +136,6 @@ class ProjectServiceTest {
                 System.out.println(list1);
             }
         }
+        sqlSession.close();
     }
 }

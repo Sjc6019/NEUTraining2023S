@@ -39,6 +39,7 @@ class UserServiceTest {
             // 记录info级别的信息
             //log.info(">>qselectUserInfo用户登录测试成功");
         }
+        sqlSession.close();
 
     }
 
@@ -67,6 +68,7 @@ class UserServiceTest {
             System.out.println(list);
             // 记录info级别的信息
         }
+        sqlSession.close();
     }
 
     @Test
@@ -86,7 +88,7 @@ class UserServiceTest {
             List<UserEntity> list = userService.queryUserList(userEntity);
             System.out.println(list);
         }
-
+        sqlSession.close();
     }
 
     @Test
@@ -114,7 +116,7 @@ class UserServiceTest {
                 System.out.println(list1);
             }
         }
-
+        sqlSession.close();
     }
 
     @Test
@@ -141,6 +143,7 @@ class UserServiceTest {
                 System.out.println(list1);
             }
         }
+        sqlSession.close();
     }
 
     @Test
@@ -167,5 +170,6 @@ class UserServiceTest {
                 System.out.println(list1);
             }
         }
+        sqlSession.close();
     }
 }
