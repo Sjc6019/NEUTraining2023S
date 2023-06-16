@@ -25,7 +25,6 @@ public class UserController {
     @RequestMapping(value = "/userLogin", method = RequestMethod.POST, headers = "Accept=application/json")
     public HttpResponseEntity userLogin(@RequestBody UserEntity userEntity) {
         HttpResponseEntity httpResponseEntity = new HttpResponseEntity();
-        try {
             List<UserEntity> hasUser = userService.selectUserInfo(userEntity);
             if (CollectionUtils.isEmpty(hasUser)) {
                 httpResponseEntity.setCode("0");
@@ -36,11 +35,6 @@ public class UserController {
                 httpResponseEntity.setData(hasUser);
                 httpResponseEntity.setMessage("success");
             }
-
-        }catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
         return httpResponseEntity;
     }
 
@@ -50,7 +44,7 @@ public class UserController {
     @RequestMapping(value = "/queryUserList", method = RequestMethod.POST, headers = "Accept=application/json")
     public HttpResponseEntity queryUserList(@RequestBody UserEntity userEntity) {
         HttpResponseEntity httpResponseEntity = new HttpResponseEntity();
-        try {
+
             List<UserEntity> hasUser = userService.queryUserList(userEntity);
             if (CollectionUtils.isEmpty(hasUser)) {
                 httpResponseEntity.setCode("0"); // 0 means query fail
@@ -62,10 +56,6 @@ public class UserController {
                 httpResponseEntity.setMessage("success"); // success means success
             }
 
-        }catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
         return httpResponseEntity;
     }
 
@@ -81,15 +71,12 @@ public class UserController {
                 httpResponseEntity.setCode("666");
                 httpResponseEntity.setData(result);
                 httpResponseEntity.setMessage("success");
-            } else {
-                httpResponseEntity.setCode("0");
-                httpResponseEntity.setData(0);
-                httpResponseEntity.setMessage("fail");
             }
-
         }catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
+            httpResponseEntity.setCode("0");
+            httpResponseEntity.setData(0);
+            httpResponseEntity.setMessage("fail");
         }
         return httpResponseEntity;
     }
@@ -100,7 +87,6 @@ public class UserController {
     @RequestMapping(value = "/modifyUserInfo", method = RequestMethod.POST, headers = "Accept=application/json")
     public HttpResponseEntity modifyUserInfo(@RequestBody UserEntity userEntity) {
         HttpResponseEntity httpResponseEntity = new HttpResponseEntity();
-        try {
             int result = userService.modifyUserInfo(userEntity);
             if (result !=0 ) {
                 httpResponseEntity.setCode("10"); // 10 means modify success
@@ -112,9 +98,6 @@ public class UserController {
                 httpResponseEntity.setMessage("fail"); // fail means fail
             }
 
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
         return httpResponseEntity;
     }
 
@@ -124,7 +107,6 @@ public class UserController {
     @RequestMapping(value = "/deleteUserById", method = RequestMethod.POST, headers = "Accept=application/json")
     public HttpResponseEntity deleteUserById(@RequestBody UserEntity userEntity) {
         HttpResponseEntity httpResponseEntity = new HttpResponseEntity();
-        try {
             int result = userService.deleteUserById(userEntity);
             if (result !=0 ) {
                 httpResponseEntity.setCode("10");
@@ -136,9 +118,6 @@ public class UserController {
                 httpResponseEntity.setMessage("fail");
             }
 
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
         return httpResponseEntity;
     }
 }
