@@ -1,12 +1,12 @@
 onload = () => {
-  $('#headerUsername').text($util.getItem('userInfo').username)
+  $('#headerUsername').text($util.getItem('userInfo')[0].username)
   $('#headerDivB').text('创建项目')
 }
 
 const handleCreateProject = () => {
   let params = {
-    createdBy: $util.getItem('userInfo').username,
-    lastUpdatedBy: $util.getItem('userInfo').username,
+    createdBy: $util.getItem('userInfo')[0].username,
+    lastUpdatedBy: $util.getItem('userInfo')[0].username,
     projectName: $('#projectName').val(),
     projectContent: $('#projectDescribe').val()
   }

@@ -1,5 +1,5 @@
 onload = () => {
-  $('#headerUsername').text($util.getItem('userInfo').username)
+  $('#headerUsername').text($util.getItem('userInfo')[0].username)
   handleHeaderLoad()
   fetchProjectList()
 }
@@ -8,7 +8,7 @@ let projectList = []
 
 const fetchProjectList = () => {
   let params = {
-    createdBy: $util.getItem('userInfo').username,
+    createdBy: $util.getItem('userInfo')[0].username,
     projectName: $('#projectName').val()
   }
   $.ajax({

@@ -1,5 +1,5 @@
 onload = () => {
-  $('#headerUsername').text($util.getItem('userInfo').username)
+  $('#headerUsername').text($util.getItem('userInfo')[0].username)
   $('#headerDivB').text('创建用户')
 
   $('#startTime').datetimepicker({
