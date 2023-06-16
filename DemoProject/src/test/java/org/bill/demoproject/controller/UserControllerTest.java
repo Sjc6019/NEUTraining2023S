@@ -45,8 +45,24 @@ class UserControllerTest {
         UserEntity userEntity = new UserEntity();
         userEntity.setUsername("test");
         userEntity.setPassword("test");
-        HttpResponseEntity httpResponseEntity = userController.userLogin(userEntity);
-        System.out.println(httpResponseEntity);
+        userEntity.setStatus("1");
+        HttpResponseEntity httpResponseEntity = userController.addUserInfo(userEntity);
+        System.out.println(httpResponseEntity.getData());
+        HttpResponseEntity httpResponseEntity1 = userController.userLogin(userEntity);
+        System.out.println(httpResponseEntity1.getData());
+        HttpResponseEntity httpResponseEntity2 = userController.queryUserList(userEntity);
+        String result = httpResponseEntity2.getData().toString();
+        String id = result.substring(result.indexOf("\"id\":")+6,result.indexOf(", \"username\"")-1);
+        System.out.println(id);
+        userEntity.setId(id);
+        HttpResponseEntity httpResponseEntity3 = userController.deleteUserById(userEntity);
+        System.out.println(httpResponseEntity3.getData());
+
+        userEntity.setUsername("rtyuiuytrtyuytrtyuiuytrertyufdsgahgdaggdiugasdgkjdhskgdsfgkdsgjkfdGKjgfdKJhgdfKJgdfJKgfkJgfJKGkjfdsGjkdfgskjgFSDKgFDJKS");
+        userEntity.setPassword("123");
+        userEntity.setStatus("1");
+        HttpResponseEntity httpResponseEntityNoResult = userController.userLogin(userEntity);
+        System.out.println(httpResponseEntityNoResult.getData());
     }
 
 
@@ -56,6 +72,9 @@ class UserControllerTest {
         userEntity.setUsername("test");
         HttpResponseEntity httpResponseEntityUser = userController.queryUserList(userEntity);
         System.out.println(httpResponseEntityUser);
+        userEntity.setUsername("noresult");
+        HttpResponseEntity httpResponseEntityNoResult = userController.queryUserList(userEntity);
+        System.out.println(httpResponseEntityNoResult.getData());
     }
 
     @Test
@@ -77,12 +96,14 @@ class UserControllerTest {
         userEntity.setUsername(null);
         HttpResponseEntity httpResponseEntity3 = userController.addUserInfo(userEntity);
         System.out.println(httpResponseEntity3.getData());
+
     }
 
     @Test
     void modifyUserInfo() {
         UserEntity userEntity = new UserEntity();
         userEntity.setUsername("testModify");
+        userEntity.setPassword("123");
         userEntity.setStatus("1");
         HttpResponseEntity httpResponseEntity = userController.addUserInfo(userEntity);
         System.out.println(httpResponseEntity.getData());
@@ -94,6 +115,7 @@ class UserControllerTest {
         System.out.println(id);
         userEntity.setId(id);
         userEntity.setUsername("testModify1");
+        userEntity.setPassword("123");
         userEntity.setStatus("1");
         HttpResponseEntity httpResponseEntity2 = userController.modifyUserInfo(userEntity);
         System.out.println(httpResponseEntity2.getData());
@@ -101,12 +123,18 @@ class UserControllerTest {
         System.out.println(httpResponseEntity3.getData());
         HttpResponseEntity httpResponseEntity4 = userController.deleteUserById(userEntity);
         System.out.println(httpResponseEntity4.getData());
+        userEntity.setUsername("testModify-testModify-testModify-testModify-testModify-testModify");
+        HttpResponseEntity httpResponseEntity5 = userController.modifyUserInfo(userEntity);
+        System.out.println(httpResponseEntity5.getData());
+        HttpResponseEntity httpResponseEntity6 = userController.deleteUserById(userEntity);
+        System.out.println(httpResponseEntity6.getData());
     }
 
     @Test
     void deleteUserById() {
         UserEntity userEntity = new UserEntity();
         userEntity.setUsername("testDelete");
+        userEntity.setPassword("123");
         userEntity.setStatus("1");
         HttpResponseEntity httpResponseEntity = userController.addUserInfo(userEntity);
         System.out.println(httpResponseEntity.getData());
@@ -118,5 +146,9 @@ class UserControllerTest {
         userEntity.setId(id);
         HttpResponseEntity httpResponseEntity2 = userController.deleteUserById(userEntity);
         System.out.println(httpResponseEntity2.getData());
+        userEntity.setId(null);
+        HttpResponseEntity httpResponseEntity3 = userController.addUserInfo(userEntity);
+        System.out.println(httpResponseEntity3.getData());
+        System.out.println(httpResponseEntity3.getMessage());
     }
 }
