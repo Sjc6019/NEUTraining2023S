@@ -31,7 +31,10 @@ class ProjectControllerTest {
         ProjectEntity projectEntity = new ProjectEntity();
         projectEntity.setProjectName("test");
         HttpResponseEntity httpResponseEntity = projectController.queryProjectList(projectEntity);
-        System.out.println(httpResponseEntity);
+        System.out.println(httpResponseEntity.getData());
+        projectEntity.setProjectName("noresult");
+        HttpResponseEntity httpResponseEntity1 = projectController.queryProjectList(projectEntity);
+        System.out.println(httpResponseEntity1.getData());
     }
 
     @Test
@@ -47,6 +50,9 @@ class ProjectControllerTest {
         projectEntity.setId(id);
         HttpResponseEntity httpResponseEntity2 = projectController.deleteProjectById(projectEntity);
         System.out.println(httpResponseEntity2.getData());
+        projectEntity.setProjectName(null);
+        HttpResponseEntity httpResponseEntity3 = projectController.addProjectInfo(projectEntity);
+        System.out.println(httpResponseEntity3.getData());
     }
 
     @Test

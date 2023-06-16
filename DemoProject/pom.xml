@@ -102,11 +102,11 @@
             </goals>
             <configuration>
               <excludes>
-                <exclude>org/bill/demoproject/controller/*</exclude>
                 <exclude>org/bill/demoproject/dao/*</exclude>
               </excludes>
               <includes>
                 <include>org/bill/demoproject/service/*</include>
+                <include>org/bill/demoproject/controller/*</include>
               </includes>
             </configuration>
           </execution>
