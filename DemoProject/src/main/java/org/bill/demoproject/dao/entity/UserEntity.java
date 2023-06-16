@@ -101,16 +101,16 @@ public class UserEntity implements Serializable {
     @Override
     public String toString() {
         return "UserEntity{" +
-                "\"id\"=\"" + id + '\"' +
-                ", \"username\"=\"" + username + '\"' +
-                ", \"password\"=\"" + password + '\"' +
-                ", \"startTime\"=\"" + startTime + '\"' +
-                ", \"stopTime\"=\"" + stopTime + '\"' +
-                ", \"status\"=\"" + status + '\"' +
-                ", \"createdBy\"=\"" + createdBy + '\"' +
-                ", \"creationDate\"=\"" + creationDate + '\"' +
-                ", \"lastUpdatedBy\"=\"" + lastUpdatedBy + '\"' +
-                ", \"lastUpdateDate\"=\"" + lastUpdateDate + '\"' +
+                "\"id\":\"" + id + '\"' +
+                ", \"username\":\"" + username + '\"' +
+                ", \"password\":\"" + password + '\"' +
+                ", \"startTime\":\"" + startTime + '\"' +
+                ", \"stopTime\":\"" + stopTime + '\"' +
+                ", \"status\":\"" + status + '\"' +
+                ", \"createdBy\":\"" + createdBy + '\"' +
+                ", \"creationDate\":\"" + creationDate + '\"' +
+                ", \"lastUpdatedBy\":\"" + lastUpdatedBy + '\"' +
+                ", \"lastUpdateDate\":\"" + lastUpdateDate + '\"' +
                 '}';
     }
 }

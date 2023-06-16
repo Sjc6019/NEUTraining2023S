@@ -87,18 +87,21 @@ public class UserController {
     @RequestMapping(value = "/modifyUserInfo", method = RequestMethod.POST, headers = "Accept=application/json")
     public HttpResponseEntity modifyUserInfo(@RequestBody UserEntity userEntity) {
         HttpResponseEntity httpResponseEntity = new HttpResponseEntity();
+        try {
             int result = userService.modifyUserInfo(userEntity);
-            if (result !=0 ) {
+            if (result != 0) {
                 httpResponseEntity.setCode("10"); // 10 means modify success
                 httpResponseEntity.setData(result); // result means result
                 httpResponseEntity.setMessage("success"); // success means success
-            } else {
+            }
+        } catch (Exception e){
+                e.printStackTrace();
                 httpResponseEntity.setCode("0"); // 0 means modify fail
                 httpResponseEntity.setData(0); // 0 means no data
                 httpResponseEntity.setMessage("fail"); // fail means fail
             }
 
-        return httpResponseEntity;
+            return httpResponseEntity;
     }
 
     /**

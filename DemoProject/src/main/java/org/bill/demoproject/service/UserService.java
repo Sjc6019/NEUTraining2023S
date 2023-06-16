@@ -41,11 +41,7 @@ public class UserService {
     public int addUserInfo(UserEntity userEntity) {
         userEntity.setId(UUIDUtil.getOneUUID());
         int userResult = userEntityMapper.insert(userEntity);
-        if (userResult != 0) {
-            return 3; //means success
-        } else {
-            return userResult; //means fail
-        }
+        return userResult;
     }
 
     /**
