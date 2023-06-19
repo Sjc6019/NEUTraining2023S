@@ -1,10 +1,15 @@
 onload = () => {
   $('#headerUsername').text($util.getItem('userInfo')[0].username)
   $('#headerDivB').text('创建问卷')
+
+  let projectId = $util.getPageParam('createQuestionnaire')
+    console.log(projectId, 'projectId')
   fetchProjectList()
 }
 
 const onCreateTemplate = () => {
+  $util.setPageParam('questionnaireProjectId', $('#selectProject').val())
+  $util.setPageParam('questionnaireType', $('#selectType').val())
   location.href = "/pages/createNewQuestionnaire/index.html"
 }
 
@@ -79,7 +84,7 @@ const fetchProjectList = () => {
     contentType: 'application/json',
     success(res) {
       // 获取到select元素
-      var selectElement = $('#selectLeo');
+      var selectElement = $('#selectProject');
 
       // 清除当前所有option
       selectElement.html('');

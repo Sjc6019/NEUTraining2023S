@@ -61,12 +61,63 @@ class QuestionnaireServiceTest {
     }
 
     @Test
-    void modifyQuestionnaireInfo() {
-
+    void modifyQuestionnaireInfo() throws IOException {
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        QuestionnaireMapper questionnaireMapper = sqlSession.getMapper(QuestionnaireMapper.class);
+        QuestionnaireService questionnaireService = new QuestionnaireService(questionnaireMapper);
+        QuestionnaireEntity questionnaireEntity = new QuestionnaireEntity();
+        questionnaireEntity.setId(UUIDUtil.getOneUUID());
+        questionnaireEntity.setProjectId("4cd6ccb65c894eafaa70b12330f8c2f8");
+        questionnaireEntity.setQuestionnaireName("test-service-add-temp-1");
+        questionnaireEntity.setQuestionnaireDescription("test-service-add-temp-1");
+        questionnaireEntity.setCreatedBy("admin");
+        questionnaireEntity.setCreationDate(new java.sql.Date(new java.util.Date().getTime()));
+        questionnaireEntity.setLastUpdatedBy("admin");
+        questionnaireEntity.setLastUpdatedDate(new java.sql.Date(new java.util.Date().getTime()));
+        int result = questionnaireService.addQuestionnaireInfo(questionnaireEntity);
+        System.out.println(result);
+        questionnaireEntity.setQuestionnaireName("");
+        List<QuestionnaireEntity> list1 = questionnaireService.queryQuestionnaireInfo(questionnaireEntity);
+        System.out.println(list1);
+        questionnaireEntity.setQuestionnaireName("test-service-modify-1");
+        questionnaireEntity.setQuestionnaireDescription("test-service-modify-1");
+        int result2 = questionnaireService.modifyQuestionnaireInfo(questionnaireEntity);
+        System.out.println(result2);
+        questionnaireEntity.setQuestionnaireName("");
+        List<QuestionnaireEntity> list2 = questionnaireService.queryQuestionnaireInfo(questionnaireEntity);
+        System.out.println(list2);
+        sqlSession.close();
     }
 
     @Test
-    void deleteQuestionnaireById() {
-
+    void deleteQuestionnaireById() throws IOException {
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        QuestionnaireMapper questionnaireMapper = sqlSession.getMapper(QuestionnaireMapper.class);
+        QuestionnaireService questionnaireService = new QuestionnaireService(questionnaireMapper);
+        QuestionnaireEntity questionnaireEntity = new QuestionnaireEntity();
+        questionnaireEntity.setId(UUIDUtil.getOneUUID());
+        questionnaireEntity.setProjectId("4cd6ccb65c894eafaa70b12330f8c2f8");
+        questionnaireEntity.setQuestionnaireName("test-service-add-temp-2");
+        questionnaireEntity.setQuestionnaireDescription("test-service-add-temp-2");
+        questionnaireEntity.setCreatedBy("admin");
+        questionnaireEntity.setCreationDate(new java.sql.Date(new java.util.Date().getTime()));
+        questionnaireEntity.setLastUpdatedBy("admin");
+        questionnaireEntity.setLastUpdatedDate(new java.sql.Date(new java.util.Date().getTime()));
+        int result = questionnaireService.addQuestionnaireInfo(questionnaireEntity);
+        System.out.println(result);
+        questionnaireEntity.setQuestionnaireName("");
+        List<QuestionnaireEntity> list1 = questionnaireService.queryQuestionnaireInfo(questionnaireEntity);
+        System.out.println(list1);
+        int result2 = questionnaireService.deleteQuestionnaireById(questionnaireEntity);
+        System.out.println(result2);
+        List<QuestionnaireEntity> list2 = questionnaireService.queryQuestionnaireInfo(questionnaireEntity);
+        System.out.println(list2);
+        sqlSession.close();
     }
 }
