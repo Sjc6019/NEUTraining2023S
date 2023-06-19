@@ -24,14 +24,18 @@ onload = () => {
     console.log(questionnaireType, 'questionnaireType')
 }
 
-const createQuestionnaire = () => {
+const handleCreateQuestionnaire = () => {
+    console.log($('#surveyName').val(), 'surveyName')
+    console.log($('#surveyDescription').val(), 'surveyDescription')
+    console.log($('#startDate').val(), 'startTime')
+    console.log($('#endDate').val(), 'endTime')
     let params = {
-        questionnaireName: $('#questionnaireName').val(),
-        questionnaireDescription: $('#questionnaireDescription').val(),
-        questionnaireProjectId: $util.getPageParam('questionnaireProjectId'),
+        questionnaireName: $('#surveyName').val(),
+        questionnaireDescription: $('#surveyDescription').val(),
+        projectId: $util.getPageParam('questionnaireProjectId'),
         questionnaireType: $util.getPageParam('questionnaireType'),
-        questionnaireStartTime: $('#startTime').val(),
-        questionnaireEndTime: $('#endTime').val()
+        startTime: $('#startDate').val() && new Date($('#startDate').val()).getTime(),
+        endTime: $('#endDate').val() && new Date($('#endDate').val()).getTime(),
     }
     console.log(params, 'params')
     $.ajax({
@@ -42,9 +46,10 @@ const createQuestionnaire = () => {
         contentType: "application/json",
         success(res) {
         console.log("res", res)
-        if (res.code === 200) {
+        if (res.code === '666') {
             alert('创建成功')
-            location.href = "/pages/seeQuestionnaire/index.html"
+            $util.setPageParam('questionnaireId', res.data.id)
+            location.href = "/pages/designQuestionnaire/index.html"
         } else {
             alert('创建失败')
         }

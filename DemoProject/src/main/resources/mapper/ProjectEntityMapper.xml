@@ -12,7 +12,7 @@
                last_updated_by  as "lastUpdatedBy",
                last_update_date as "lastUpdateDate"
         from project_info
-        where project_name like concat('%', #{projectName}, '%')
+        where project_name like concat('%', #{projectName}, '%') or id = #{id}
     </select>
     <insert id="addProjectInfo" parameterType="org.bill.demoproject.dao.entity.ProjectEntity">
         insert into project_info (id, user_id, project_name, project_content, created_by, creation_date,

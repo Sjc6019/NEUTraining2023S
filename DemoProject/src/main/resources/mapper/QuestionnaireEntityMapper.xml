@@ -11,17 +11,19 @@
                created_by as createdBy,
                creation_date as creationDate,
                last_updated_by as lastUpdatedBy,
-               last_updated_date as lastUpdatedDate
+               last_updated_date as lastUpdatedDate,
+               start_time as startTime,
+                end_time as endTime
         from questionnaire_info
-        where questionnaire_name like concat('%', #{questionnaireName}, '%')
+        where questionnaire_name like concat('%', #{questionnaireName}, '%') or project_id = #{projectId}
     </select>
     <insert id="addQuestionnaireInfo" parameterType="org.bill.demoproject.dao.entity.QuestionnaireEntity">
         insert into questionnaire_info (id, project_id, questionnaire_type, questionnaire_name, questionnaire_description,
-                                        created_by, creation_date, last_updated_by, last_updated_date)
+                                        created_by, creation_date, last_updated_by, last_updated_date, start_time, end_time)
         VALUES (#{id,jdbcType=VARCHAR}, #{projectId,jdbcType=VARCHAR}, #{questionnaireType,jdbcType=VARCHAR},
                 #{questionnaireName,jdbcType=VARCHAR}, #{questionnaireDescription,jdbcType=VARCHAR},
                 #{createdBy,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR},
-                #{lastUpdatedDate,jdbcType=TIMESTAMP})
+                #{lastUpdatedDate,jdbcType=TIMESTAMP}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP})
 
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="org.bill.demoproject.dao.entity.QuestionnaireEntity">
@@ -50,6 +52,12 @@
             </if>
             <if test="lastUpdatedDate != null">
                 last_updated_date = #{lastUpdatedDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
             </if>
         </set>
         where id = #{id,jdbcType=VARCHAR}

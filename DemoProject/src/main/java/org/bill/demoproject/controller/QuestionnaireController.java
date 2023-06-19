@@ -1,9 +1,11 @@
 package org.bill.demoproject.controller;
 
 import org.bill.demoproject.beans.HttpResponseEntity;
+import org.bill.demoproject.common.utils.UUIDUtil;
 import org.bill.demoproject.dao.entity.QuestionnaireEntity;
 import org.bill.demoproject.service.QuestionnaireService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,8 +17,9 @@ public class QuestionnaireController {
     @Autowired
     private QuestionnaireService questionnaireService;
     @RequestMapping(value = "/queryQuestionnaireInfo", method = RequestMethod.POST, headers = "Accept=application/json")
-    public HttpResponseEntity queryQuestionnaireInfo(QuestionnaireEntity questionnaireEntity) {
+    public HttpResponseEntity queryQuestionnaireInfo(@RequestBody QuestionnaireEntity questionnaireEntity) {
         HttpResponseEntity httpResponseEntity = new HttpResponseEntity();
+        System.out.println(questionnaireEntity);
         List<QuestionnaireEntity> hasQuestionnaire = questionnaireService.queryQuestionnaireInfo(questionnaireEntity);
         if (hasQuestionnaire.isEmpty()){
             httpResponseEntity.setCode("0");
@@ -31,13 +34,14 @@ public class QuestionnaireController {
     }
 
     @RequestMapping(value = "/addQuestionnaireInfo", method = RequestMethod.POST, headers = "Accept=application/json")
-    public HttpResponseEntity addQuestionnaireInfo(QuestionnaireEntity questionnaireEntity) {
+    public HttpResponseEntity addQuestionnaireInfo(@RequestBody QuestionnaireEntity questionnaireEntity) {
         HttpResponseEntity httpResponseEntity1 = new HttpResponseEntity();
+        System.out.println(questionnaireEntity);
         try {
             int result = questionnaireService.addQuestionnaireInfo(questionnaireEntity);
             if (result != 0) {
                 httpResponseEntity1.setCode("666");
-                httpResponseEntity1.setData(null);
+                httpResponseEntity1.setData("{\"id\":\""+questionnaireEntity.getId()+"\"}");
                 httpResponseEntity1.setMessage("success");
             }
         } catch (Exception e) {
@@ -50,7 +54,7 @@ public class QuestionnaireController {
     }
 
     @RequestMapping(value = "/modifyQuestionnaireInfo", method = RequestMethod.POST, headers = "Accept=application/json")
-    public HttpResponseEntity modifyQuestionnaireInfo(QuestionnaireEntity questionnaireEntity) {
+    public HttpResponseEntity modifyQuestionnaireInfo(@RequestBody QuestionnaireEntity questionnaireEntity) {
         HttpResponseEntity httpResponseEntity2 = new HttpResponseEntity();
         try {
             int result = questionnaireService.modifyQuestionnaireInfo(questionnaireEntity);
@@ -69,7 +73,7 @@ public class QuestionnaireController {
     }
 
     @RequestMapping(value = "/deleteQuestionnaireById", method = RequestMethod.POST, headers = "Accept=application/json")
-    public HttpResponseEntity deleteQuestionnaireById(QuestionnaireEntity questionnaireEntity) {
+    public HttpResponseEntity deleteQuestionnaireById(@RequestBody QuestionnaireEntity questionnaireEntity) {
         HttpResponseEntity httpResponseEntity3 = new HttpResponseEntity();
         try {
             int result = questionnaireService.deleteQuestionnaireById(questionnaireEntity);
