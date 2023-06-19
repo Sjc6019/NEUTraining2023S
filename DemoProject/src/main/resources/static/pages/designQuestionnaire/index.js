@@ -29,7 +29,7 @@ const onAddQuestion = (type) => {
       break;
   }
   $('#problem').append(ele)
-  problem.push({ problemName: '', mustAnswer: true, option: [{}] })
+  problem.push({ problemName: '', mustAnswer: true, option: [{}], type: type })
 
   $(".question").hover(() => {
     let problemIndex = $('.question:hover').attr('data-problemIndex')
@@ -494,9 +494,9 @@ const handleModifyTitle = () => {
 
 
 const handleEditFinish = () => {
-  let params = {}
+  let params = { questionnaireTitle, questionnaireDescription, problem }
   $.ajax({
-    url: API_BASE_URL + '/modifyQuestionnaire',
+    url: 'http://127.0.0.1:8085' + '/modifyQuestionnaire',
     type: "POST",
     data: JSON.stringify(params),
     dataType: "json",

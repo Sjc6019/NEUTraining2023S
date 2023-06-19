@@ -40,6 +40,7 @@ public class UserService {
      */
     public int addUserInfo(UserEntity userEntity) {
         userEntity.setId(UUIDUtil.getOneUUID());
+        userEntity.setStatus("1");
         int userResult = userEntityMapper.insert(userEntity);
         return userResult;
     }

@@ -1,6 +1,7 @@
 onload = () => {
   $('#headerUsername').text($util.getItem('userInfo')[0].username)
   $('#headerDivB').text('创建问卷')
+  fetchProjectList()
 }
 
 const onCreateTemplate = () => {
@@ -64,4 +65,33 @@ const createTemplate = () => {
 
 const handleEdit = () => {
   open('/pages/designQuestionnaire/index.html')
+}
+
+const fetchProjectList = () => {
+  $.ajax({
+    url: API_BASE_URL + '/queryProjectList',
+    type: 'POST',
+    data: '{\n' +
+        '  "createdBy": "admin",\n' +
+        '  "projectName": ""\n' +
+        '}',
+    dataType: 'json',
+    contentType: 'application/json',
+    success(res) {
+      // 获取到select元素
+      var selectElement = $('#selectLeo');
+
+      // 清除当前所有option
+      selectElement.html('');
+
+      // 添加默认option
+      selectElement.append(`<option value="0" disabled selected hidden>请选择</option>`)
+
+      // 根据获取到的数据，动态添加option
+      res.data.map((item, index) => {
+        selectElement.append(`<option value="${item.id}">${item.projectName}</option>`)
+      })
+    }
+  })
+
 }

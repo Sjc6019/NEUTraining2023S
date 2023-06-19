@@ -121,9 +121,7 @@ class UserControllerTest {
         System.out.println(httpResponseEntity2.getData());
         HttpResponseEntity httpResponseEntity3 = userController.queryUserList(userEntity);
         System.out.println(httpResponseEntity3.getData());
-        HttpResponseEntity httpResponseEntity4 = userController.deleteUserById(userEntity);
-        System.out.println(httpResponseEntity4.getData());
-        userEntity.setUsername("testModify-testModify-testModify-testModify-testModify-testModify");
+        userEntity.setUsername("testModify-testModify-testModify-testModify-testModify-testModify-testModify-testModify-testModify-testModify-testModify-testModify-testModify-testModify-testModify-testModify-testModify-testModify-testModify-testModify-testModify-testModify-testModify-testModify");
         HttpResponseEntity httpResponseEntity5 = userController.modifyUserInfo(userEntity);
         System.out.println(httpResponseEntity5.getData());
         HttpResponseEntity httpResponseEntity6 = userController.deleteUserById(userEntity);
