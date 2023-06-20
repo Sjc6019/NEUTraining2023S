@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.bill.demoproject.dao.ProblemEntityMapper">
+    <resultMap id="problemMap" type="org.bill.demoproject.dao.entity.ProblemEntity">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="questionnaire_id" property="questionnaireId" jdbcType="VARCHAR"/>
+        <result column="problem_type" property="problemType" jdbcType="INTEGER"/>
+        <result column="problem_name" property="problemName" jdbcType="VARCHAR"/>
+        <result column="must_answer" property="mustAnswer" jdbcType="VARCHAR"/>
+        <result column="problem_options" property="problemOptions" jdbcType="VARCHAR" typeHandler="org.bill.demoproject.common.typehandler.OptionEntityListTypeHandler"/>
+    </resultMap>
+    <select id="queryProblem" parameterType="org.bill.demoproject.dao.entity.ProblemEntity"
+            resultType="org.bill.demoproject.dao.entity.ProblemEntity" resultMap="problemMap">
+        select id,
+               questionnaire_id,
+               problem_type,
+               problem_name,
+               must_answer,
+               problem_options
+        from problem_info
+        where problem_info.problem_name like concat('%'
+            , #{problemName}
+            , '%')
+           or questionnaire_id = #{questionnaireId}
+    </select>
+    <insert id="addProblem" parameterType="java.util.List">
+        insert into problem_info (id,
+                                  questionnaire_id,
+                                  problem_type,
+                                  problem_name,
+                                  must_answer,
+                                  problem_options)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id,jdbcType=VARCHAR},
+            #{item.questionnaireId,jdbcType=VARCHAR},
+            #{item.problemType,jdbcType=INTEGER},
+            #{item.problemName,jdbcType=VARCHAR},
+            #{item.mustAnswer,jdbcType=VARCHAR},
+            #{item.problemOptions,jdbcType=VARCHAR, typeHandler=org.bill.demoproject.common.typehandler.OptionEntityListTypeHandler})
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="org.bill.demoproject.dao.entity.ProblemEntity">
+        update problem_info
+        <set>
+            <if test="questionnaireId != null">
+                questionnaire_id = #{questionnaireId,jdbcType=VARCHAR},
+            </if>
+            <if test="problemType != null">
+                problem_type = #{problemType,jdbcType=INTEGER},
+            </if>
+            <if test="problemName != null">
+                problem_name = #{problemName,jdbcType=VARCHAR},
+            </if>
+            <if test="mustAnswer != null">
+                must_answer = #{mustAnswer,jdbcType=VARCHAR},
+            </if>
+            <if test="problemOptions != null">
+                problem_options = #{problemOptions,jdbcType=VARCHAR, typeHandler=org.bill.demoproject.common.typehandler.OptionEntityListTypeHandler},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <delete id="deleteProblemById" parameterType="org.bill.demoproject.dao.entity.ProblemEntity">
+        delete from problem_info where id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteProblemByQuestionnaireId" parameterType="java.lang.String">
+        delete from problem_info where questionnaire_id = #{questionnaireId,jdbcType=VARCHAR}
+    </delete>
+
+</mapper>

@@ -41,7 +41,7 @@ public class QuestionnaireController {
             int result = questionnaireService.addQuestionnaireInfo(questionnaireEntity);
             if (result != 0) {
                 httpResponseEntity1.setCode("666");
-                httpResponseEntity1.setData("{\"id\":\""+questionnaireEntity.getId()+"\"}");
+                httpResponseEntity1.setData(questionnaireEntity.getId());
                 httpResponseEntity1.setMessage("success");
             }
         } catch (Exception e) {

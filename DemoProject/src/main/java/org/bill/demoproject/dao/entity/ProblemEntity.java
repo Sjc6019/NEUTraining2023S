@@ -2,15 +2,17 @@ package org.bill.demoproject.dao.entity;
 
 import org.bill.demoproject.beans.OptionEntity;
 
+import java.io.Serializable;
 import java.util.Arrays;
+import java.util.List;
 
-public class ProblemEntity {
+public class ProblemEntity implements Serializable {
     private String id;
     private String questionnaireId;
-    private String problemType;
+    private Integer problemType;
     private String problemName;
     private boolean mustAnswer;
-    private OptionEntity[] option;
+    private List<OptionEntity> problemOptions;
 
     public String getId() {
         return id;
@@ -28,11 +30,11 @@ public class ProblemEntity {
         this.questionnaireId = questionnaireId;
     }
 
-    public String getProblemType() {
+    public Integer getProblemType() {
         return problemType;
     }
 
-    public void setProblemType(String problemType) {
+    public void setProblemType(Integer problemType) {
         this.problemType = problemType;
     }
 
@@ -52,23 +54,34 @@ public class ProblemEntity {
         this.mustAnswer = mustAnswer;
     }
 
-    public OptionEntity[] getOption() {
-        return option;
+    public List<OptionEntity> getProblemOptions() {
+        return problemOptions;
     }
 
-    public void setOption(OptionEntity[] option) {
-        this.option = option;
+    public void setProblemOptions(List<OptionEntity> problemOptions) {
+        this.problemOptions = problemOptions;
     }
 
     @Override
     public String toString() {
-        return "ProblemEntity{" +
-                "\"id\":\"" + id + '\"' +
-                ", \"questionnaireId\":\"" + questionnaireId + '\"' +
-                ", \"problemType\":\"" + problemType + '\"' +
-                ", \"problemName\":\"" + problemName + '\"' +
-                ", \"mustAnswer\":" + mustAnswer +
-                ", \"option\":" + Arrays.toString(option) +
-                '}';
+        if (problemOptions == null) {
+            return "ProblemEntity{" +
+                    "\"id\":\"" + id + '\"' +
+                    ", \"questionnaireId\":\"" + questionnaireId + '\"' +
+                    ", \"problemType\":\"" + problemType + '\"' +
+                    ", \"problemName\":\"" + problemName + '\"' +
+                    ", \"mustAnswer\":" + mustAnswer +
+                    ", \"problemOptions\":null" +
+                    '}';
+        }else {
+            return "ProblemEntity{" +
+                    "\"id\":\"" + id + '\"' +
+                    ", \"questionnaireId\":\"" + questionnaireId + '\"' +
+                    ", \"problemType\":\"" + problemType + '\"' +
+                    ", \"problemName\":\"" + problemName + '\"' +
+                    ", \"mustAnswer\":" + mustAnswer +
+                    ", \"problemOptions\":" + Arrays.toString(problemOptions.toArray()) +
+                    '}';
+        }
     }
 }

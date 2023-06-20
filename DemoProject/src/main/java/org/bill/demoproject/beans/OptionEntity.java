@@ -1,6 +1,8 @@
 package org.bill.demoproject.beans;
 
-public class OptionEntity {
+import java.io.Serializable;
+
+public class OptionEntity implements Serializable {
     private String chooseTerm;
 
     public String getChooseTerm() {
@@ -9,5 +11,12 @@ public class OptionEntity {
 
     public void setChooseTerm(String chooseTerm) {
         this.chooseTerm = chooseTerm;
+    }
+
+    @Override
+    public String toString() {
+        return "OptionEntity{" +
+                "chooseTerm='" + chooseTerm + '\'' +
+                '}';
     }
 }

@@ -5,6 +5,9 @@
     <typeAliases>
         <package name="org.bill.demoproject"/>
     </typeAliases>
+    <typeHandlers>
+        <typeHandler handler="org.bill.demoproject.common.typehandler.OptionEntityListTypeHandler"/>
+    </typeHandlers>
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>
@@ -21,5 +24,7 @@
         <mapper resource="mapper/UserEntityMapper.xml"/>
         <mapper resource="mapper/ProjectEntityMapper.xml"/>
         <mapper resource="mapper/QuestionnaireEntityMapper.xml"/>
+        <mapper resource="mapper/ProblemEntityMapper.xml"/>
     </mappers>
+
 </configuration>

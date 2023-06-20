@@ -5,7 +5,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.bill.demoproject.common.utils.UUIDUtil;
-import org.bill.demoproject.dao.QuestionnaireMapper;
+import org.bill.demoproject.dao.QuestionnaireEntityMapper;
 import org.bill.demoproject.dao.entity.QuestionnaireEntity;
 import org.junit.jupiter.api.Test;
 
@@ -21,8 +21,8 @@ class QuestionnaireServiceTest {
         InputStream inputStream = Resources.getResourceAsStream(resource);
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         SqlSession sqlSession = sqlSessionFactory.openSession();
-        QuestionnaireMapper questionnaireMapper = sqlSession.getMapper(QuestionnaireMapper.class);
-        QuestionnaireService questionnaireService = new QuestionnaireService(questionnaireMapper);
+        QuestionnaireEntityMapper questionnaireEntityMapper = sqlSession.getMapper(QuestionnaireEntityMapper.class);
+        QuestionnaireService questionnaireService = new QuestionnaireService(questionnaireEntityMapper);
         QuestionnaireEntity questionnaireEntity = new QuestionnaireEntity();
         questionnaireEntity.setQuestionnaireName("");
         List<QuestionnaireEntity> list = questionnaireService.queryQuestionnaireInfo(questionnaireEntity);
@@ -42,8 +42,8 @@ class QuestionnaireServiceTest {
         InputStream inputStream = Resources.getResourceAsStream(resource);
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         SqlSession sqlSession = sqlSessionFactory.openSession();
-        QuestionnaireMapper questionnaireMapper = sqlSession.getMapper(QuestionnaireMapper.class);
-        QuestionnaireService questionnaireService = new QuestionnaireService(questionnaireMapper);
+        QuestionnaireEntityMapper questionnaireEntityMapper = sqlSession.getMapper(QuestionnaireEntityMapper.class);
+        QuestionnaireService questionnaireService = new QuestionnaireService(questionnaireEntityMapper);
         QuestionnaireEntity questionnaireEntity = new QuestionnaireEntity();
         questionnaireEntity.setId(UUIDUtil.getOneUUID());
         questionnaireEntity.setProjectId("4cd6ccb65c894eafaa70b12330f8c2f8");
@@ -66,8 +66,8 @@ class QuestionnaireServiceTest {
         InputStream inputStream = Resources.getResourceAsStream(resource);
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         SqlSession sqlSession = sqlSessionFactory.openSession();
-        QuestionnaireMapper questionnaireMapper = sqlSession.getMapper(QuestionnaireMapper.class);
-        QuestionnaireService questionnaireService = new QuestionnaireService(questionnaireMapper);
+        QuestionnaireEntityMapper questionnaireEntityMapper = sqlSession.getMapper(QuestionnaireEntityMapper.class);
+        QuestionnaireService questionnaireService = new QuestionnaireService(questionnaireEntityMapper);
         QuestionnaireEntity questionnaireEntity = new QuestionnaireEntity();
         questionnaireEntity.setId(UUIDUtil.getOneUUID());
         questionnaireEntity.setProjectId("4cd6ccb65c894eafaa70b12330f8c2f8");
@@ -98,8 +98,8 @@ class QuestionnaireServiceTest {
         InputStream inputStream = Resources.getResourceAsStream(resource);
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         SqlSession sqlSession = sqlSessionFactory.openSession();
-        QuestionnaireMapper questionnaireMapper = sqlSession.getMapper(QuestionnaireMapper.class);
-        QuestionnaireService questionnaireService = new QuestionnaireService(questionnaireMapper);
+        QuestionnaireEntityMapper questionnaireEntityMapper = sqlSession.getMapper(QuestionnaireEntityMapper.class);
+        QuestionnaireService questionnaireService = new QuestionnaireService(questionnaireEntityMapper);
         QuestionnaireEntity questionnaireEntity = new QuestionnaireEntity();
         questionnaireEntity.setId(UUIDUtil.getOneUUID());
         questionnaireEntity.setProjectId("4cd6ccb65c894eafaa70b12330f8c2f8");

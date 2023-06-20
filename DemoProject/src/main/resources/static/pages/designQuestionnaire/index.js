@@ -1,6 +1,15 @@
 let questionnaireTitle = '问卷标题'
 let questionnaireDescription = '问卷说明'
-const problem = []
+var problem = []
+
+onload = () => {
+  let questionnaireId = $util.getPageParam('questionnaireId')
+    console.log(questionnaireId, 'questionnaireId')
+  if (questionnaireId != null) {
+    console.log(questionnaireId, 'projectId')
+    fetchProblem(questionnaireId)
+  }
+}
 
 /**
  * 添加问题
@@ -29,7 +38,8 @@ const onAddQuestion = (type) => {
       break;
   }
   $('#problem').append(ele)
-  problem.push({ questionnaireId: $util.getPageParam('questionnaireId'), problemName: '', mustAnswer: true, option: [{}], type: type })
+  console.log($util.getPageParam('questionnaireId'))
+  problem.push({ questionnaireId: $util.getPageParam('questionnaireId'), problemName: '', mustAnswer: true, problemOptions: [{}], problemType: type })
 
   $(".question").hover(() => {
     let problemIndex = $('.question:hover').attr('data-problemIndex')
@@ -51,7 +61,7 @@ const onAddQuestion = (type) => {
 
 const onInput = (problemIndex, optionIndex, key) => {
   if (optionIndex || optionIndex === 0)
-    problem[problemIndex].option[optionIndex][key] = $(`#question${problemIndex} #optionItem${optionIndex} #${key}`)[0].value
+    problem[problemIndex].problemOptions[optionIndex][key] = $(`#question${problemIndex} #optionItem${optionIndex} #${key}`)[0].value
   else
     problem[problemIndex][key] = $(`#question${problemIndex} #${key}`)[0].value
 }
@@ -193,17 +203,17 @@ const handleAddSingleChoice = () => {
 
 const singleChoiceAddOption = (problemIndex) => {
   $(`#question${problemIndex} #option`).append(`
-    <div class="option-item" id="optionItem${problem[problemIndex].option.length}">
-      <input type="text" class="form-control" id="chooseTerm" placeholder="选项【单选】" oninput="onInput(${problemIndex}, ${problem[problemIndex].option.length}, 'chooseTerm')" />
-      <span class="option-del" onclick="singleChoiceDelOption(${problemIndex}, ${problem[problemIndex].option.length})">删除</span>
+    <div class="option-item" id="optionItem${problem[problemIndex].problemOptions.length}">
+      <input type="text" class="form-control" id="chooseTerm" placeholder="选项【单选】" oninput="onInput(${problemIndex}, ${problem[problemIndex].problemOptions.length}, 'chooseTerm')" />
+      <span class="option-del" onclick="singleChoiceDelOption(${problemIndex}, ${problem[problemIndex].problemOptions.length})">删除</span>
     </div>
   `)
-  problem[problemIndex].option.push({})
+  problem[problemIndex].problemOptions.push({})
 }
 
 const singleChoiceDelOption = (problemIndex, optionIndex) => {
   $(`#question${problemIndex} .option-item`)[optionIndex].remove()
-  problem[problemIndex].option.splice(optionIndex, 1)
+  problem[problemIndex].problemOptions.splice(optionIndex, 1)
   $(`#question${problemIndex} .option-del`).map((item, index) => {
     index.onclick = singleChoiceDelOption.bind(this, problemIndex, item)
   })
@@ -214,7 +224,7 @@ const singleChoiceEditFinish = (problemIndex) => {
   $(`#question${problemIndex} .bottom2`).css('display', 'inline')
   $(`#question${problemIndex} #questionTitle`).text(`${problemIndex + 1}.${problem[problemIndex].problemName}`)
   $(`#question${problemIndex} .bottom2`).html('')
-  problem[problemIndex].option.map(item => {
+  problem[problemIndex].problemOptions.map(item => {
     $(`#question${problemIndex} .bottom2`).append(`
       <div style="display: flex; align-items: center;">
         <label class="radio-inline">
@@ -258,17 +268,17 @@ const handleAddMultipleChoice = () => {
 
 const multipleChoiceAddOption = (problemIndex) => {
   $(`#question${problemIndex} #option`).append(`
-    <div class="option-item" id="optionItem${problem[problemIndex].option.length}">
-      <input type="text" class="form-control" id="chooseTerm" placeholder="选项【多选】" oninput="onInput(${problemIndex}, ${problem[problemIndex].option.length}, 'chooseTerm')" />
-      <span class="option-del" onclick="multipleChoiceDelOption(${problemIndex}, ${problem[problemIndex].option.length})">删除</span>
+    <div class="option-item" id="optionItem${problem[problemIndex].problemOptions.length}">
+      <input type="text" class="form-control" id="chooseTerm" placeholder="选项【多选】" oninput="onInput(${problemIndex}, ${problem[problemIndex].problemOptions.length}, 'chooseTerm')" />
+      <span class="option-del" onclick="multipleChoiceDelOption(${problemIndex}, ${problem[problemIndex].problemOptions.length})">删除</span>
     </div>
   `)
-  problem[problemIndex].option.push({})
+  problem[problemIndex].problemOptions.push({})
 }
 
 const multipleChoiceDelOption = (problemIndex, optionIndex) => {
   $(`#question${problemIndex} .option-item`)[optionIndex].remove()
-  problem[problemIndex].option.splice(optionIndex, 1)
+  problem[problemIndex].problemOptions.splice(optionIndex, 1)
   $(`#question${problemIndex} .option-del`).map((item, index) => {
     index.onclick = multipleChoiceDelOption.bind(this, problemIndex, item)
   })
@@ -279,7 +289,7 @@ const multipleChoiceEditFinish = (problemIndex) => {
   $(`#question${problemIndex} .bottom2`).css('display', 'inline')
   $(`#question${problemIndex} #questionTitle`).text(`${problemIndex + 1}.${problem[problemIndex].problemName}`)
   $(`#question${problemIndex} .bottom2`).html('')
-  problem[problemIndex].option.map(item => {
+  problem[problemIndex].problemOptions.map(item => {
     $(`#question${problemIndex} .bottom2`).append(`
       <div style="display: flex; align-items: center;">
         <label class="checkbox-inline">
@@ -354,17 +364,17 @@ const handleAddMatrix = () => {
 
 const matrixAddOption = (problemIndex) => {
   $(`#question${problemIndex} #option`).append(`
-    <div class="option-item" id="optionItem${problem[problemIndex].option.length}">
-      <input type="text" class="form-control" id="chooseTerm" placeholder="选项" oninput="onInput(${problemIndex}, ${problem[problemIndex].option.length}, 'chooseTerm')" />
-      <span class="option-del" onclick="matrixDelOption(${problemIndex}, ${problem[problemIndex].option.length})">删除</span>
+    <div class="option-item" id="optionItem${problem[problemIndex].problemOptions.length}">
+      <input type="text" class="form-control" id="chooseTerm" placeholder="选项" oninput="onInput(${problemIndex}, ${problem[problemIndex].problemOptions.length}, 'chooseTerm')" />
+      <span class="option-del" onclick="matrixDelOption(${problemIndex}, ${problem[problemIndex].problemOptions.length})">删除</span>
     </div>
   `)
-  problem[problemIndex].option.push({})
+  problem[problemIndex].problemOptions.push({})
 }
 
 const matrixDelOption = (problemIndex, optionIndex) => {
   $(`#question${problemIndex} .option-item`)[optionIndex].remove()
-  problem[problemIndex].option.splice(optionIndex, 1)
+  problem[problemIndex].problemOptions.splice(optionIndex, 1)
   $(`#question${problemIndex} .option-del`).map((item, index) => {
     index.onclick = matrixDelOption.bind(this, problemIndex, item)
   })
@@ -394,7 +404,7 @@ const matrixEditFinish = (problemIndex) => {
         <td>${item}</td>
       </tr>
     `)
-    problem[problemIndex].option.map(() => {
+    problem[problemIndex].problemOptions.map(() => {
       $(`#question${problemIndex} .bottom2 tbody .tr${index}`).append(`
         <td>
           <input type="radio" name="radio${index}">
@@ -402,7 +412,7 @@ const matrixEditFinish = (problemIndex) => {
       `)
     })
   })
-  problem[problemIndex].option.map(item => {
+  problem[problemIndex].problemOptions.map(item => {
     $(`#question${problemIndex} .bottom2 thead tr`).append(`
       <th>${item.chooseTerm}</th>
     `)
@@ -447,18 +457,18 @@ const handleAddGauge = () => {
 
 const gaugeAddOption = (problemIndex) => {
   $(`#question${problemIndex} #option`).append(`
-    <div class="option-item" id="optionItem${problem[problemIndex].option.length}">
-      <input type="text" class="form-control" id="chooseTerm" oninput="onInput(${problemIndex}, ${problem[problemIndex].option.length}, 'chooseTerm')" />
-      <input type="text" class="form-control" id="fraction" oninput="onInput(${problemIndex}, ${problem[problemIndex].option.length}, 'fraction')" style="width: 50px;" />
-      <span class="option-del" onclick="gaugeDelOption(${problemIndex}, ${problem[problemIndex].option.length})">删除</span>
+    <div class="option-item" id="optionItem${problem[problemIndex].problemOptions.length}">
+      <input type="text" class="form-control" id="chooseTerm" oninput="onInput(${problemIndex}, ${problem[problemIndex].problemOptions.length}, 'chooseTerm')" />
+      <input type="text" class="form-control" id="fraction" oninput="onInput(${problemIndex}, ${problem[problemIndex].problemOptions.length}, 'fraction')" style="width: 50px;" />
+      <span class="option-del" onclick="gaugeDelOption(${problemIndex}, ${problem[problemIndex].problemOptions.length})">删除</span>
     </div>
   `)
-  problem[problemIndex].option.push({})
+  problem[problemIndex].problemOptions.push({})
 }
 
 const gaugeDelOption = (problemIndex, optionIndex) => {
   $(`#question${problemIndex} .option-item`)[optionIndex].remove()
-  problem[problemIndex].option.splice(optionIndex, 1)
+  problem[problemIndex].problemOptions.splice(optionIndex, 1)
   $(`#question${problemIndex} .option-del`).map((item, index) => {
     index.onclick = gaugeDelOption.bind(this, problemIndex, item)
   })
@@ -470,9 +480,9 @@ const gaugeEditFinish = (problemIndex) => {
   $(`#question${problemIndex} #questionTitle`).text(`${problemIndex + 1}.${problem[problemIndex].problemName}`)
   $(`#question${problemIndex} .bottom2`).html('')
   $(`#question${problemIndex} .bottom2`).append(`
-    <div>${problem[problemIndex].option[0].chooseTerm}</div>
+    <div>${problem[problemIndex].problemOptions[0].chooseTerm}</div>
   `)
-  problem[problemIndex].option.map(item => {
+  problem[problemIndex].problemOptions.map(item => {
     $(`#question${problemIndex} .bottom2`).append(`
       <div>
         <label class="radio-inline">
@@ -482,7 +492,7 @@ const gaugeEditFinish = (problemIndex) => {
     `)
   })
   $(`#question${problemIndex} .bottom2`).append(`
-    <div>${problem[problemIndex].option[problem[problemIndex].option.length - 1].chooseTerm}</div>
+    <div>${problem[problemIndex].problemOptions[problem[problemIndex].problemOptions.length - 1].chooseTerm}</div>
   `)
 }
 
@@ -494,15 +504,53 @@ const handleModifyTitle = () => {
 
 
 const handleEditFinish = () => {
-  let params = { questionnaireTitle, questionnaireDescription, problem }
+
+  let params =  problem
   $.ajax({
-    url: API_BASE_URL + '/modifyQuestionnaire',
+    url: API_BASE_URL + '/addProblem',
     type: "POST",
     data: JSON.stringify(params),
     dataType: "json",
-    contentType: "application/jsoresn",
+    contentType: "application/json",
     success(res) {
       console.log(res)
     }
   })
+}
+
+const fetchProblem = (questionnaireId) => {
+  let params = {
+    questionnaireId: questionnaireId
+  }
+    $.ajax({
+        url: API_BASE_URL + '/queryProblem',
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify(params),
+        success(res) {
+        console.log(res)
+          if(res.code === 666) {
+            problem = res.data
+            loadProblem()
+          }
+        }
+
+    })
+}
+
+const loadProblem = () => {
+    problem.map((item, index) => {
+        if (item.problemType === 1) {
+        $('#problem').append(handleAddSingleChoice())
+        } else if (item.problemType === 2) {
+        $('#problem').append(handleAddMultipleChoice())
+        } else if (item.problemType === 3) {
+        $('#problem').append(handleAddText())
+        } else if (item.problemType === 4) {
+        $('#problem').append(handleAddScore())
+        } else if (item.problemType === 5) {
+        $('#problem').append(handleAddGauge())
+        }
+    })
 }

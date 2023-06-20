@@ -47,8 +47,11 @@ const handleCreateQuestionnaire = () => {
         success(res) {
         console.log("res", res)
         if (res.code === '666') {
+
+            $util.setPageParam('questionnaireId', res.data)
+            console.log(res.data)
+            console.log($util.getPageParam('questionnaireId'), 'questionnaireId')
             alert('创建成功')
-            $util.setPageParam('questionnaireId', res.data.id)
             location.href = "/pages/designQuestionnaire/index.html"
         } else {
             alert('创建失败')

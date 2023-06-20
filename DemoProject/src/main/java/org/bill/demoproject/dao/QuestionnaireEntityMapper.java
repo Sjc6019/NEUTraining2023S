@@ -8,7 +8,7 @@ import java.util.List;
 
 @Component
 @Mapper
-public interface QuestionnaireMapper {
+public interface QuestionnaireEntityMapper {
     List<QuestionnaireEntity> queryQuestionnaireList(QuestionnaireEntity questionnaireEntity);
     int addQuestionnaireInfo(QuestionnaireEntity questionnaireEntity);
     int updateByPrimaryKeySelective(QuestionnaireEntity questionnaireEntity);
