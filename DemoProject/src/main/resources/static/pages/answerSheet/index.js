@@ -1,7 +1,13 @@
 var problem = [];
+var questionnaireId;
 onload = () => {
-  let questionnaireId = $util.getPageParam('questionnaireId');
-  console.log(questionnaireId, 'questionnaireId');
+  //从url中获取问卷id
+  let urlParams = new URLSearchParams(window.location.search);
+  questionnaireId = urlParams.get('questionnaireId');
+  if (questionnaireId == null) {
+    questionnaireId = $util.getPageParam('questionnaireId');
+    console.log(questionnaireId, 'questionnaireId');
+  }
   fetchProblem(questionnaireId);
 };
 
@@ -187,7 +193,6 @@ const submit = () => {
     alert('请输入答题人');
     return;
   }
-  let questionnaireId = $util.getPageParam('questionnaireId');
   let answer = [];
   problem.forEach((item, index) => {
     let problemIndex = index + 1;
@@ -248,9 +253,10 @@ const submit = () => {
     data: JSON.stringify(params),
     success(res) {
       console.log(res);
-      if (res.code == 200) {
+      if (res.code == 666) {
         alert('提交成功');
-        window.location.href = '/pages/answerSheet/index.html';
+        //禁用提交按钮
+        $("#submit").hide();
       }
     },
   });

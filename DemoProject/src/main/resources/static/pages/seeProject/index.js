@@ -46,19 +46,27 @@ const fetchProjectInfo = (id) => {
 
                 let idTd = $("<td></td>").text(index + 1); // 序号
                 let nameTd = $("<td></td>").text(item.questionnaireName); // 试卷名称
-                let timeTd = $("<td></td>").text(item.creationDate); // 发布时间
+                let timeTd = $("<td></td>").text(item.releaseTime); // 发布时间
 
                 let operationTd = $("<td></td>");
                 // 在操作栏添加一个操作按钮，这里只是例子，根据实际需要修改
-                // let operationBtn1 = $("<button></button>").text("编辑").addClass("btn btn-primary");
-                // operationBtn1.on("click", function () {
-                //     // 按钮点击事件处理，具体实现按照需求来
-                //     console.log("操作按钮点击，当前行数据：", item);
-                //     $util.setPageParam('questionnaireId', item.id)
-                //     console.log($util.getPageParam('questionnaireId'), 'questionnaireId')
-                //     location.href = "/pages/designQuestionnaire/index.html"
-                // });
-                // operationTd.append(operationBtn1);
+                let operationBtn1 = $("<button></button>").text("发布").addClass("btn btn-primary");
+                operationBtn1.on("click", function () {
+                    // 按钮点击事件处理，具体实现按照需求来
+                    console.log("操作按钮点击，当前行数据：", item);
+                    $util.setPageParam('questionnaireId', item.id)
+                    console.log($util.getPageParam('questionnaireId'), 'questionnaireId')
+                    //弹窗生成链接
+                    let parentUrl = window.location.host
+                    let url = 'http://' + parentUrl + '/pages/answerSheet/index.html?questionnaireId=' + item.id
+                    console.log(url)
+                    $('#url').text(url)
+                    $('#url').attr('href', url)
+                    $('#myModal').modal('show')
+                    releaseQuestionnaire(item.id)
+                    
+                });
+                operationTd.append(operationBtn1);
                 let operationBtn2 = $("<button></button>").text("预览").addClass("btn btn-primary");
                 operationBtn2.on("click", function () {
                     // 按钮点击事件处理，具体实现按照需求来
@@ -81,7 +89,7 @@ const fetchProjectInfo = (id) => {
                 operationBtn4.on("click", function () {
                     // 按钮点击事件处理，具体实现按照需求来
                     console.log("删除按钮点击，当前行数据：", item);
-
+                    deleteQuestionnaire(item.id)
 
                 });
                 operationTd.append(operationBtn4);
@@ -93,6 +101,42 @@ const fetchProjectInfo = (id) => {
         },
         error(err) {
             console.error("Failed to fetch data", err);
+        }
+    })
+}
+
+const deleteQuestionnaire = (id) => {
+    let params = {
+        id,
+        status: 0
+    }
+    $.ajax({
+        url: API_BASE_URL + '/modifyQuestionnaireInfo',
+        type: "POST",
+        data: JSON.stringify(params),
+        dataType: "json",
+        contentType: "application/json",
+        success(res) {
+            console.log("res", res)
+            window.location.reload()
+        }
+    })
+}
+
+const releaseQuestionnaire = (id) => {
+    let params = {
+        id,
+        releaseTime: new Date()
+    }
+    $.ajax({
+        url: API_BASE_URL + '/modifyQuestionnaireInfo',
+        type: "POST",
+        data: JSON.stringify(params),
+        dataType: "json",
+        contentType: "application/json",
+        success(res) {
+            console.log("res", res)
+            window.location.reload()
         }
     })
 }

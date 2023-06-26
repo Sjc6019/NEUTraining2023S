@@ -8,22 +8,24 @@
                questionnaire_type as questionnaireType,
                questionnaire_name as questionnaireName,
                questionnaire_description as questionnaireDescription,
+               status,
                created_by as createdBy,
                creation_date as creationDate,
                last_updated_by as lastUpdatedBy,
                last_updated_date as lastUpdatedDate,
                start_time as startTime,
-                end_time as endTime
+                end_time as endTime,
+                release_time as releaseTime
         from questionnaire_info
-        where questionnaire_name like concat('%', #{questionnaireName}, '%') or project_id = #{projectId}
+        where (questionnaire_name like concat('%', #{questionnaireName}, '%') or project_id = #{projectId}) and status = 1
     </select>
     <insert id="addQuestionnaireInfo" parameterType="org.bill.demoproject.dao.entity.QuestionnaireEntity">
         insert into questionnaire_info (id, project_id, questionnaire_type, questionnaire_name, questionnaire_description,
-                                        created_by, creation_date, last_updated_by, last_updated_date, start_time, end_time)
+                                        status, created_by, creation_date, last_updated_by, last_updated_date, start_time, end_time, release_time)
         VALUES (#{id,jdbcType=VARCHAR}, #{projectId,jdbcType=VARCHAR}, #{questionnaireType,jdbcType=VARCHAR},
-                #{questionnaireName,jdbcType=VARCHAR}, #{questionnaireDescription,jdbcType=VARCHAR},
+                #{questionnaireName,jdbcType=VARCHAR}, #{questionnaireDescription,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
                 #{createdBy,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR},
-                #{lastUpdatedDate,jdbcType=TIMESTAMP}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP})
+                #{lastUpdatedDate,jdbcType=TIMESTAMP}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{releaseTime,jdbcType=TIMESTAMP})
 
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="org.bill.demoproject.dao.entity.QuestionnaireEntity">
@@ -40,6 +42,9 @@
             </if>
             <if test="questionnaireDescription != null">
                 questionnaire_description = #{questionnaireDescription,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
             </if>
             <if test="createdBy != null">
                 created_by = #{createdBy,jdbcType=VARCHAR},
@@ -58,6 +63,9 @@
             </if>
             <if test="endTime != null">
                 end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="releaseTime != null">
+                release_time = #{releaseTime,jdbcType=TIMESTAMP},
             </if>
         </set>
         where id = #{id,jdbcType=VARCHAR}
