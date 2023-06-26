@@ -166,6 +166,11 @@ const loadProblem = () => {
 
 const submit = () => {
     let params = []
+    let answerUser = $('#answerUser').val()
+    if (!answerUser) {
+        alert('请输入答题人')
+        return
+    }
     problem.forEach((item, index) => {
         let problemIndex = index + 1
         let type = item.problemType
