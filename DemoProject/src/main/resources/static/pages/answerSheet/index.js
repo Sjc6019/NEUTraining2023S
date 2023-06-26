@@ -135,7 +135,7 @@ const loadProblem = () => {
                             <tr>
                                 <td>${item1.chooseTerm}</td>
                                 ${trs.map((item2, index2) => {
-                                    return `<td><input type="radio" name="chooseTerm${index1}" value="${item2.chooseTerm}" /></td>`
+                                    return `<td><input type="radio" name="chooseTerm${index1}" value="${item2}" /></td>`
                                 }).join('')}
                             </tr>
                             `
