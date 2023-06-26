@@ -34,6 +34,7 @@ const handleCreateQuestionnaire = () => {
         questionnaireDescription: $('#surveyDescription').val(),
         projectId: $util.getPageParam('questionnaireProjectId'),
         questionnaireType: $util.getPageParam('questionnaireType'),
+        status: 1,
         startTime: $('#startDate').val() && new Date($('#startDate').val()).getTime(),
         endTime: $('#endDate').val() && new Date($('#endDate').val()).getTime(),
     }
