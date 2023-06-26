@@ -1,6 +1,14 @@
 var problem = [];
 var questionnaireId;
+var answerUserName;
+var answerid;
+let problemType = [];
 onload = () => {
+
+  answerUserName = $util.getPageParam('answerUser');
+  console.log(answerUserName, 'answerUserName');
+  answerid = $util.getPageParam('answerId');
+  console.log(answerid, 'answerid');
   //从url中获取问卷id
   let urlParams = new URLSearchParams(window.location.search);
   questionnaireId = urlParams.get('questionnaireId');
@@ -9,7 +17,47 @@ onload = () => {
     console.log(questionnaireId, 'questionnaireId');
   }
   fetchProblem(questionnaireId);
+  problemType = getProblemType(questionnaireId);
+  // getQuestionnaireName(answerUserName);
+
+  $('#answer-user-name').text($util.getPageParam('answerUser'));
+  loadAnswer(answerid)
 };
+
+
+
+
+
+const getQuestionnaireName = (answerUserName) => {
+return `
+    <div class="answer-user">
+        <span>答卷人：</span>
+        <label class="answer-user-name" id="answerUserName">${answerUserName}</label>
+    </div>  
+`
+}
+
+const getProblemType = (questionnaireId) => {
+  let params2 = {
+    questionnaireId: questionnaireId,
+  };
+  $.ajax({
+      url: API_BASE_URL + '/queryProblem',
+      type: "POST",
+      data: JSON.stringify(params2),
+      dataType: "json",
+      contentType: "application/json",
+      success(res) {
+          console.log("res", res);
+          let info = res.data;
+          problemType = info.map((item) => {
+            return item.problemType;
+          });
+          console.log(problemType);
+      }
+  });
+};
+  
 
 const fetchProblem = (questionnaireId) => {
   let params = {
@@ -28,6 +76,8 @@ const fetchProblem = (questionnaireId) => {
     },
   });
 };
+
+
 
 const loadProblem = () => {
   function loadQuestion(type, option) {
@@ -187,12 +237,100 @@ const loadProblem = () => {
   });
 };
 
+const loadAnswer = (answerid) => {
+  let params = {
+    id: answerid,
+  };
+  $.ajax({
+    url: API_BASE_URL + '/queryAnswerSheetInfo',
+    type: 'POST',
+    dataType: 'json',
+    contentType: 'application/json',
+    data: JSON.stringify(params),
+    success(res) {
+      console.log(res);
+      let answer = res.data[0];
+      answer.answer.forEach((item, index) => {
+        let problemIndex = index + 1;
+        let tempAnswer = item.answer;
+        console.log(tempAnswer);
+        let tempParams = {
+          id: item.problemId,
+        };
+        $.ajax({
+          url: API_BASE_URL + '/queryProblem',
+          type: 'POST',
+          dataType: 'json',
+          contentType: 'application/json',
+          data: JSON.stringify(tempParams)
+        }).then(res => {
+          console.log(res);
+          let type = res.data[0].problemType
+          console.log(type)
+          switch (type) {
+            case 1:
+              $(`#question${problemIndex} input[type='radio'][value='${tempAnswer}']`).prop('checked', true);
+              break;
+            case 2:
+              let tempAnswerArray = tempAnswer.split(',');
+              tempAnswerArray.forEach((answer) => {
+                $(`#question${problemIndex} input[type='checkbox'][value='${answer}']`).prop('checked', true);
+              });
+              break;
+            case 3:
+              $(`#question${problemIndex} textarea`).val(tempAnswer);
+              break;
+            case 4:
+              let tempAnswerIndex = tempAnswer.split(',');
+              tempAnswerIndex.forEach((answer, index) => {
+                $(`#question${problemIndex} input[type='radio'][name='chooseTerm${index}'][value='${answer}']`).prop('checked', true);
+              });
+              break;
+            case 5:
+              $(`#question${problemIndex} input[type='radio'][value='${tempAnswer}']`).prop('checked', true);
+              break;
+            default:
+              break;
+          }
+        })
+        // let type = problemType
+        // console.log(type)
+        // console
+
+        // switch (type) {
+        //   case 1:
+        //     $(`#question${problemIndex}`).val(tempAnswer);
+        //     break;
+        //   case 2:
+        //     let tempAnswerArray = tempAnswer.split(',');
+        //     tempAnswerArray.forEach((answer) => {
+        //       $(`#question${problemIndex} input[type='checkbox'][value='${answer}']`).prop('checked', true);
+        //     });
+        //     break;
+        //   case 3:
+        //     $(`#question${problemIndex} textarea`).val(tempAnswer);
+        //     break;
+        //   case 4:
+        //     let tempAnswerIndex = tempAnswer.split(',');
+        //     tempAnswerIndex.forEach((answer, index) => {
+        //       $(`#question${problemIndex} input[type='radio'][name='chooseTerm${index}'][value='${answer}']`).prop('checked', true);
+        //     });
+        //     break;
+        //   case 5:
+        //     $(`#question${problemIndex} input[type='radio'][value='${tempAnswer}']`).prop('checked', true);
+        //     break;
+        //   default:
+        //     break;
+        // }
+        
+
+      });
+    },
+  });
+};
+
 const submit = () => {
   let answerUser = $('#answer-user').val();
-  if (!answerUser) {
-    alert('请输入答题人');
-    return;
-  }
   let answer = [];
   problem.forEach((item, index) => {
     let problemIndex = index + 1;

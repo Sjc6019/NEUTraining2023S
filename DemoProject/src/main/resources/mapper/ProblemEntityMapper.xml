@@ -23,7 +23,7 @@
         where problem_info.problem_name like concat('%'
             , #{problemName}
             , '%')
-           or questionnaire_id = #{questionnaireId}
+           or questionnaire_id = #{questionnaireId} or id = #{id}
     </select>
     <insert id="addProblem" parameterType="java.util.List">
         insert into problem_info (id,
