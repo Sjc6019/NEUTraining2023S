@@ -17,7 +17,7 @@
                 end_time as endTime,
                 release_time as releaseTime
         from questionnaire_info
-        where (questionnaire_name like concat('%', #{questionnaireName}, '%') or project_id = #{projectId}) and status = 1
+        where (questionnaire_name like concat('%', #{questionnaireName}, '%') or project_id = #{projectId} or id = #{id}) and status = 1
     </select>
     <insert id="addQuestionnaireInfo" parameterType="org.bill.demoproject.dao.entity.QuestionnaireEntity">
         insert into questionnaire_info (id, project_id, questionnaire_type, questionnaire_name, questionnaire_description,
