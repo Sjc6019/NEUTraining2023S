@@ -486,7 +486,7 @@ const gaugeEditFinish = (problemIndex) => {
     $(`#question${problemIndex} .bottom2`).append(`
       <div>
         <label class="radio-inline">
-          <input type="radio" name="fraction" />${item.fraction}
+          <input type="radio" name="fraction" value="${item.chooseTerm}"/>${item.chooseTerm}
         </label>
       </div>
     `)

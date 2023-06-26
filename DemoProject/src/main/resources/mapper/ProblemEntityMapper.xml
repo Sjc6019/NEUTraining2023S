@@ -8,6 +8,7 @@
         <result column="problem_name" property="problemName" jdbcType="VARCHAR"/>
         <result column="must_answer" property="mustAnswer" jdbcType="VARCHAR"/>
         <result column="problem_options" property="problemOptions" jdbcType="VARCHAR" typeHandler="org.bill.demoproject.common.typehandler.OptionEntityListTypeHandler"/>
+        <result column="left_title" property="leftTitle" jdbcType="VARCHAR"/>
     </resultMap>
     <select id="queryProblem" parameterType="org.bill.demoproject.dao.entity.ProblemEntity"
             resultType="org.bill.demoproject.dao.entity.ProblemEntity" resultMap="problemMap">
@@ -16,7 +17,8 @@
                problem_type,
                problem_name,
                must_answer,
-               problem_options
+               problem_options,
+               left_title
         from problem_info
         where problem_info.problem_name like concat('%'
             , #{problemName}
@@ -29,7 +31,8 @@
                                   problem_type,
                                   problem_name,
                                   must_answer,
-                                  problem_options)
+                                  problem_options,
+                                  left_title)
         values
         <foreach collection="list" item="item" index="index" separator=",">
             (#{item.id,jdbcType=VARCHAR},
@@ -37,7 +40,8 @@
             #{item.problemType,jdbcType=INTEGER},
             #{item.problemName,jdbcType=VARCHAR},
             #{item.mustAnswer,jdbcType=VARCHAR},
-            #{item.problemOptions,jdbcType=VARCHAR, typeHandler=org.bill.demoproject.common.typehandler.OptionEntityListTypeHandler})
+            #{item.problemOptions,jdbcType=VARCHAR, typeHandler=org.bill.demoproject.common.typehandler.OptionEntityListTypeHandler},
+             #{item.leftTitle,jdbcType=VARCHAR})
         </foreach>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="org.bill.demoproject.dao.entity.ProblemEntity">
@@ -57,6 +61,9 @@
             </if>
             <if test="problemOptions != null">
                 problem_options = #{problemOptions,jdbcType=VARCHAR, typeHandler=org.bill.demoproject.common.typehandler.OptionEntityListTypeHandler},
+            </if>
+            <if test="leftTitle != null">
+                left_title = #{leftTitle,jdbcType=VARCHAR},
             </if>
         </set>
         where id = #{id,jdbcType=VARCHAR}

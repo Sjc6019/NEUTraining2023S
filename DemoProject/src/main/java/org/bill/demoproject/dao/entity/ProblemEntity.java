@@ -13,6 +13,7 @@ public class ProblemEntity implements Serializable {
     private String problemName;
     private boolean mustAnswer;
     private List<OptionEntity> problemOptions;
+    private String leftTitle;
 
     public String getId() {
         return id;
@@ -62,6 +63,14 @@ public class ProblemEntity implements Serializable {
         this.problemOptions = problemOptions;
     }
 
+    public String getLeftTitle() {
+        return leftTitle;
+    }
+
+    public void setLeftTitle(String leftTitle) {
+        this.leftTitle = leftTitle;
+    }
+
     @Override
     public String toString() {
         if (problemOptions == null) {
@@ -72,6 +81,7 @@ public class ProblemEntity implements Serializable {
                     ", \"problemName\":\"" + problemName + '\"' +
                     ", \"mustAnswer\":" + mustAnswer +
                     ", \"problemOptions\":null" +
+                    ", \"leftTitle\":\"" + leftTitle + '\"' +
                     '}';
         }else {
             return "ProblemEntity{" +
@@ -81,6 +91,7 @@ public class ProblemEntity implements Serializable {
                     ", \"problemName\":\"" + problemName + '\"' +
                     ", \"mustAnswer\":" + mustAnswer +
                     ", \"problemOptions\":" + Arrays.toString(problemOptions.toArray()) +
+                    ", \"leftTitle\":\"" + leftTitle + '\"' +
                     '}';
         }
     }

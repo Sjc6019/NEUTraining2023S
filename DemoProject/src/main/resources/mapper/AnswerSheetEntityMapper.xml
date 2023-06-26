@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.bill.demoproject.dao.AnswerSheetEntityMapper">
+    <resultMap id="answerSheetMap" type="org.bill.demoproject.dao.entity.AnswerSheetEntity">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="questionnaire_id" property="questionnaireId" jdbcType="VARCHAR"/>
+        <result column="answer_user" property="answerUser" jdbcType="VARCHAR"/>
+        <result column="answer" property="answer" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="queryAnswerSheet" parameterType="org.bill.demoproject.dao.entity.AnswerSheetEntity"
+            resultType="org.bill.demoproject.dao.entity.AnswerSheetEntity" resultMap="answerSheetMap">
+        select id,
+               answer_user,
+               questionnaire_id,
+               answer
+        from answer_sheet
+        where answer_sheet.answer_user like concat('%'
+            , #{answerUser}
+            , '%')
+    </select>
+    <insert id="addAnswerSheet" parameterType="java.util.List">
+        insert into answer_sheet (id,
+                                  answer_user,
+                                  questionnaire_id,
+                                  answer)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id,jdbcType=VARCHAR},
+            #{item.answerUser,jdbcType=VARCHAR},
+            #{item.questionnaireId,jdbcType=VARCHAR},
+            #{item.answer,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+<!--    <update id="updateByPrimaryKeySelective" parameterType="org.bill.demoproject.dao.entity.ProblemEntity">-->
+<!--        update problem_info-->
+<!--        <set>-->
+<!--            <if test="questionnaireId != null">-->
+<!--                questionnaire_id = #{questionnaireId,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="problemType != null">-->
+<!--                problem_type = #{problemType,jdbcType=INTEGER},-->
+<!--            </if>-->
+<!--            <if test="problemName != null">-->
+<!--                problem_name = #{problemName,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="mustAnswer != null">-->
+<!--                must_answer = #{mustAnswer,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="problemOptions != null">-->
+<!--                problem_options = #{problemOptions,jdbcType=VARCHAR, typeHandler=org.bill.demoproject.common.typehandler.OptionEntityListTypeHandler},-->
+<!--            </if>-->
+<!--        </set>-->
+<!--        where id = #{id,jdbcType=VARCHAR}-->
+<!--    </update>-->
+    <delete id="deleteAnswerSheetById" parameterType="org.bill.demoproject.dao.entity.AnswerSheetEntity">
+        delete from answer_sheet
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+
+</mapper>
