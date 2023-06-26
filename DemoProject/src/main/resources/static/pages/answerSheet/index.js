@@ -137,28 +137,19 @@ const loadProblem = () => {
                     <thead>
                         <tr>
                             <th></th>
-                            ${trs
-                              .map((item, index) => {
-                                return `<th>${item}</th>`;
-                              })
-                              .join('')}
+                            ${option.map((item1, index) => {
+                              return `<th>${item1.chooseTerm}</th>`;
+                            }).join('')}
                         </tr>
                     </thead>
                     <tbody>
-                        ${option
-                          .map((item1, index1) => {
-                            return `
-                            <tr>
-                                <td>${item1.chooseTerm}</td>
-                                ${trs
-                                  .map((item2, index2) => {
-                                    return `<td><input type="radio" name="chooseTerm${index1}" value="${item2}" /></td>`;
-                                  })
-                                  .join('')}
-                            </tr>
-                            `;
-                          })
-                          .join('')}
+                        ${trs.map((item1, index1) => {
+                            return `<tr><td>${item1}</td>
+                                ${option.map((item2, index) => {
+                                  return `<td><input type="radio" name="chooseTerm${index1}" value="${item2.chooseTerm}"/></td>`;
+                                  }).join('')
+                                }</tr>`;
+                        }).join('')}
                     </tbody>
                 </table>
             </div>
@@ -243,6 +234,7 @@ const submit = () => {
     questionnaireId: questionnaireId,
     answerUser: answerUser,
     answer: answer,
+    answerTime: new Date().getTime(),
   };
   console.log(params);
   $.ajax({
