@@ -1,5 +1,6 @@
 package org.bill.demoproject.service;
 
+import org.bill.demoproject.common.utils.UUIDUtil;
 import org.bill.demoproject.dao.AnswerSheetEntityMapper;
 import org.bill.demoproject.dao.entity.AnswerSheetEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ public class AnswerSheetService {
     }
 
     public int addAnswerSheet(AnswerSheetEntity answerSheetEntity) {
+        answerSheetEntity.setId(UUIDUtil.getOneUUID());
         int result = answerSheetEntityMapper.addAnswerSheet(answerSheetEntity);
         return result;
     }

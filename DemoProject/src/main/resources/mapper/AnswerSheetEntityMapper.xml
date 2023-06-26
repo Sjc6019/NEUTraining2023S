@@ -5,7 +5,7 @@
         <id column="id" property="id" jdbcType="VARCHAR"/>
         <result column="questionnaire_id" property="questionnaireId" jdbcType="VARCHAR"/>
         <result column="answer_user" property="answerUser" jdbcType="VARCHAR"/>
-        <result column="answer" property="answer" jdbcType="VARCHAR"/>
+        <result column="answer" property="answer" jdbcType="VARCHAR" typeHandler="org.bill.demoproject.common.typehandler.AnswerEntityListTypeHandler"/>
     </resultMap>
     <select id="queryAnswerSheet" parameterType="org.bill.demoproject.dao.entity.AnswerSheetEntity"
             resultType="org.bill.demoproject.dao.entity.AnswerSheetEntity" resultMap="answerSheetMap">
@@ -18,18 +18,15 @@
             , #{answerUser}
             , '%')
     </select>
-    <insert id="addAnswerSheet" parameterType="java.util.List">
+    <insert id="addAnswerSheet" parameterType="org.bill.demoproject.dao.entity.AnswerSheetEntity">
         insert into answer_sheet (id,
                                   answer_user,
                                   questionnaire_id,
                                   answer)
-        values
-        <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.id,jdbcType=VARCHAR},
-            #{item.answerUser,jdbcType=VARCHAR},
-            #{item.questionnaireId,jdbcType=VARCHAR},
-            #{item.answer,jdbcType=VARCHAR})
-        </foreach>
+        values (#{id,jdbcType=VARCHAR},
+                #{answerUser,jdbcType=VARCHAR},
+                #{questionnaireId,jdbcType=VARCHAR},
+                #{answer,jdbcType=VARCHAR, typeHandler=org.bill.demoproject.common.typehandler.AnswerEntityListTypeHandler})
     </insert>
 <!--    <update id="updateByPrimaryKeySelective" parameterType="org.bill.demoproject.dao.entity.ProblemEntity">-->
 <!--        update problem_info-->

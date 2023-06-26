@@ -1,10 +1,14 @@
 package org.bill.demoproject.dao.entity;
 
+import org.bill.demoproject.beans.AnswerEntity;
+
+import java.util.List;
+
 public class AnswerSheetEntity {
     private String id;
     private String answerUser;
     private String questionnaireId;
-    private String answer;
+    private List<AnswerEntity> answer;
 
     public String getId() {
         return id;
@@ -30,11 +34,11 @@ public class AnswerSheetEntity {
         this.questionnaireId = questionnaireId;
     }
 
-    public String getAnswer() {
+    public List<AnswerEntity> getAnswer() {
         return answer;
     }
 
-    public void setAnswer(String answer) {
+    public void setAnswer(List<AnswerEntity> answer) {
         this.answer = answer;
     }
 }

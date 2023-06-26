@@ -42,7 +42,7 @@ public class AnswerSheetController {
             int result = answerSheetService.addAnswerSheet(answerSheetEntity);
             if (result != 0) {
                 httpResponseEntity1.setCode("666");
-                httpResponseEntity1.setData(answerSheetEntity.getId());
+                httpResponseEntity1.setData(null);
                 httpResponseEntity1.setMessage("success");
             }
         } catch (Exception e) {
