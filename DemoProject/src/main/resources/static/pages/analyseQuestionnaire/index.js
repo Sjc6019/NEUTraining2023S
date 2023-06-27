@@ -33,6 +33,119 @@ const fetchQuestionnaireList = (id) => {
     });
 };
 
+const handleViewByType = () => {
+    $('#problems').empty();
+    $('#problems').append(
+        `<div id="singleChoiceContainer"></div>
+        <div id="multipleChoiceContainer"></div>
+        <div id="textContainer"></div>
+        `,
+    );
+    fetchProblemListByType(questionnaireId);
+
+}
+
+const fetchProblemListByType = (id) => {
+    let params = {
+        questionnaireId: id,
+    };
+    $.ajax({
+        url: API_BASE_URL + '/queryProblem',
+        type: 'POST',
+        data: JSON.stringify(params),
+        dataType: 'json',
+        contentType: 'application/json',
+        success(res) {
+            console.log(res, 'res');
+            if (res.code === '666') {
+                problemList = res.data;
+                problemList.forEach((item, index) => {
+                    switch (item.problemType) {
+                        case 1:
+                            $('#singleChoiceContainer').append(
+                                `<div class="singleChoice"> 
+                                    <div class="problem-title">
+                                        <h5>题目${index+1}:${item.problemName}</h5>
+                                    </div>
+                                    <div>
+                                        <span>选项：</span>         
+                                        <span><button class="btn btn-primary" id="tableSingleChoice${index}">表格</button></span>                               
+                                        <span><button class="btn btn-primary" id="barSingleChoice${index}">柱状图</button></span>
+                                        <span><button class="btn btn-primary" id="pieSingleChoice${index}">饼状图</button></span>
+                                    </div>
+                                    <div id="singleChoiceTable${index}" style="width: 600px;height:400px;"></div>                                    
+                                    <div id="singleChoice${index}" style="width: 600px;height:400px;"></div>
+                                </div>`,
+                            );
+                            var tableButton = document.getElementById('tableSingleChoice' + index);
+                            tableButton.onclick = function () {
+                                handleSingleChoice(index, item, 0)
+                            }
+                            var barButton = document.getElementById('barSingleChoice' + index);
+                            barButton.onclick = function () {
+                                handleSingleChoice(index, item,1)
+                            }
+                            var pieButton = document.getElementById('pieSingleChoice' + index);
+                            pieButton.onclick = function () {
+                                handleSingleChoice(index, item,2)
+                            }
+                            break;
+                        case 2:
+                            $('#multipleChoiceContainer').append(
+                                `<div class="multipleChoice">
+                                    <div class="problem-title">
+                                        <h5>题目${index+1}:${item.problemName}</h5>
+                                    </div>
+                                    <div>
+                                        <span>选项：</span>
+                                        <span><button class="btn btn-primary" id="tableMultipleChoice${index}">表格</button></span>
+                                        <span><button class="btn btn-primary" id="barMultipleChoice${index}">柱状图</button></span>
+                                        <span><button class="btn btn-primary" id="pieMultipleChoice${index}">饼状图</button></span>
+                                    </div>
+                                    <div id="multipleChoiceTable${index}" style="width: 600px;height:400px;"></div>
+                                    <div id="multipleChoice${index}" style="width: 600px;height:400px;"></div>
+                                </div>`,
+                            );
+                            var tableButton = document.getElementById('tableMultipleChoice' + index);
+                            tableButton.onclick = function () {
+                                handleMultipleChoice(index, item, 0)
+                            }
+                            var barButton = document.getElementById('barMultipleChoice' + index);
+                            barButton.onclick = function () {
+                                handleMultipleChoice(index, item,1)
+                            }
+                            var pieButton = document.getElementById('pieMultipleChoice' + index);
+                            pieButton.onclick = function () {
+                                handleMultipleChoice(index, item,2)
+                            }
+                            break;
+                        case 3:
+                            $('#textContainer').append(
+                                `<div class="fillBlank"> 
+                                    <div class="problem-title">
+                                        ${item.problemName}
+                                    </div>
+                                    <table  class="table table-bordered">
+                                        <tbody id="fillBlank${index}">
+                                        </tbody>
+                                    </table> 
+                                </div>
+                                `
+                            );
+                            handleFillBlank(index, item)
+                            break;
+                        default:
+                            break;
+                    }
+                });
+            }
+        },
+        error(err) {
+            console.log(err);
+        },
+    });
+};
+
 const fetchProblemList = (id) => {
     let params = {
         questionnaireId: id,
@@ -51,19 +164,61 @@ const fetchProblemList = (id) => {
                     switch (item.problemType) {
                         case 1:
                             $('#problems').append(
-                                `<div class="singleChoice"> <div class="problem-title">
-                  ${item.problemName}
-                  </div> <div id="singleChoice${index}" style="width: 600px;height:400px;"></div> </div>`,
+                                `<div class="singleChoice"> 
+                                    <div class="problem-title">
+                                        <h5>题目${index+1}:${item.problemName}</h5>
+                                    </div>
+                                    <div>
+                                        <span>选项：</span>         
+                                        <span><button class="btn btn-primary" id="tableSingleChoice${index}">表格</button></span>                               
+                                        <span><button class="btn btn-primary" id="barSingleChoice${index}">柱状图</button></span>
+                                        <span><button class="btn btn-primary" id="pieSingleChoice${index}">饼状图</button></span>
+                                    </div>
+                                    <div id="singleChoiceTable${index}" style="width: 600px;height:400px;"></div>                                    
+                                    <div id="singleChoice${index}" style="width: 600px;height:400px;"></div>
+                                </div>`,
                             );
-                            handleSingleChoice(index, item)
+                            var tableButton = document.getElementById('tableSingleChoice' + index);
+                            tableButton.onclick = function () {
+                                handleSingleChoice(index, item, 0)
+                            }
+                            var barButton = document.getElementById('barSingleChoice' + index);
+                            barButton.onclick = function () {
+                                handleSingleChoice(index, item,1)
+                            }
+                            var pieButton = document.getElementById('pieSingleChoice' + index);
+                            pieButton.onclick = function () {
+                                handleSingleChoice(index, item,2)
+                            }
                             break;
                         case 2:
                             $('#problems').append(
-                                `<div class="multipleChoice"> <div class="problem-title">
-                  ${item.problemName}
-                    </div> <div id="multipleChoice${index}" style="width: 600px;height:400px;"></div> </div>`,
+                                `<div class="multipleChoice">
+                                    <div class="problem-title">
+                                        <h5>题目${index+1}:${item.problemName}</h5>
+                                    </div>
+                                    <div>
+                                        <span>选项：</span>
+                                        <span><button class="btn btn-primary" id="tableMultipleChoice${index}">表格</button></span>
+                                        <span><button class="btn btn-primary" id="barMultipleChoice${index}">柱状图</button></span>
+                                        <span><button class="btn btn-primary" id="pieMultipleChoice${index}">饼状图</button></span>
+                                    </div>
+                                    <div id="multipleChoiceTable${index}" style="width: 600px;height:400px;"></div>
+                                    <div id="multipleChoice${index}" style="width: 600px;height:400px;"></div>
+                                </div>`,
                             );
-                            handleMultipleChoice(index, item)
+                            var tableButton = document.getElementById('tableMultipleChoice' + index);
+                            tableButton.onclick = function () {
+                                handleMultipleChoice(index, item, 0)
+                            }
+                            var barButton = document.getElementById('barMultipleChoice' + index);
+                            barButton.onclick = function () {
+                                handleMultipleChoice(index, item,1)
+                            }
+                            var pieButton = document.getElementById('pieMultipleChoice' + index);
+                            pieButton.onclick = function () {
+                                handleMultipleChoice(index, item,2)
+                            }
                             break;
                         case 3:
                             $('#problems').append(
@@ -107,7 +262,14 @@ const fetchProblemList = (id) => {
     });
 };
 
-const handleSingleChoice = (index, problem) => {
+const handleSingleChoice = (index, problem, type) => {
+    if (type === 0) {
+        $('#singleChoice' + index).css('display', 'none')
+        $('#singleChoiceTable' + index).css('display', 'block')
+    } else {
+        $('#singleChoiceTable' + index).css('display', 'none')
+        $('#singleChoice' + index).css('display', 'block')
+    }
     var chartDom = $('#singleChoice' + index).get(0)
     console.log(problem)
     console.log(problem.id)
@@ -135,31 +297,101 @@ const handleSingleChoice = (index, problem) => {
         let item = tempYData[i];
         yCount[item] = yCount[item] ? yCount[item] + 1 : 1;
     }
-    let data = Object.keys(yCount).map(key => ({name: key, value: yCount[key]}));
-    console.log(data)
-    option = {
-        xAxis: {
-            type: 'category',
-            data: xData
-        },
-        yAxis: {
-            type: 'value',
-        },
-        series: [
-            {
-                data: data,
-                type: 'bar',
-                showBackground: true,
-                backgroundStyle: {
-                    color: 'rgba(180, 180, 180, 0.2)',
+    let data1 = Object.keys(yCount).map(key => ([key,yCount[key]]));
+    let data2 = Object.keys(yCount).map(key => ({name:key,value:yCount[key]}));
+    console.log(data1)
+    switch (type) {
+        case 0:
+            var tableDom = $('#singleChoiceTable' + index)
+            tableDom.css('display', 'block')
+            tableDom.empty()
+            tableDom.append(
+                `<table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>选项</th>
+                            <th>人数</th>
+                        </tr>
+                    </thead>
+                    <tbody id="singleChoiceTableContent${index}">
+                    </tbody>
+                </table>`
+            )
+            var table = document.getElementById('singleChoiceTableContent' + index);
+            for (let i = 0; i < data1.length; i++) {
+                let tr = document.createElement('tr');
+                let td1 = document.createElement('td');
+                let td2 = document.createElement('td');
+                td1.innerHTML = data1[i][0];
+                td2.innerHTML = data1[i][1];
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                table.appendChild(tr);
+            }
+            break;
+        case 1:
+            option = {
+                xAxis: {
+                    type: 'category',
+                    data: xData,
                 },
-            },
-        ],
-    };
-    option && myChart.setOption(option);
+                yAxis: {
+                    type: 'value',
+                },
+                series: [
+                    {
+                        data: data1,
+                        type: 'bar',
+                        showBackground: true,
+                        backgroundStyle: {
+                            color: 'rgba(180, 180, 180, 0.2)',
+                        },
+                    },
+                ],
+            };
+            break;
+        case 2: // 饼状图
+            option = {
+                title: {
+                    text: problem.problemName,
+                    left: 'center',
+                    top: 20,
+                    textStyle: {
+                        color: '#ccc',
+                    },
+                },
+                tooltip: {
+                    trigger: 'item',
+                },
+                legend: {},
+                series: [
+                    {
+                        type: 'pie',
+                        radius: '50%',
+                        data: data2,
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                            },
+                        },
+                    },
+                ],
+            };
+    }
+
+    if (type != 0) {
+        option && myChart.setOption(option);
+    }
 };
 
-const handleMultipleChoice = (index, problem) => {
+const handleMultipleChoice = (index, problem,type) => {
+    if (type === 0) {
+        $('#multipleChoice' + index).css('display', 'none')
+        $('#multipleChoiceTable' + index).css('display', 'block')
+    } else {
+        $('#multipleChoiceTable' + index).css('display', 'none')
+        $('#multipleChoice' + index).css('display', 'block')
+    }
     var chartDom = $('#multipleChoice' + index).get(0)
     var myChart = echarts.init(chartDom);
     var option;
@@ -195,28 +427,89 @@ const handleMultipleChoice = (index, problem) => {
         let item = tempYData[i];
         yCount[item] = yCount[item] ? yCount[item] + 1 : 1;
     }
-    let data = Object.keys(yCount).map(key => ({name: key, value: yCount[key]}));
-    console.log(data)
-    option = {
-        xAxis: {
-            type: 'category',
-            data: xData
-        },
-        yAxis: {
-            type: 'value',
-        },
-        series: [
-            {
-                data: data,
-                type: 'bar',
-                showBackground: true,
-                backgroundStyle: {
-                    color: 'rgba(180, 180, 180, 0.2)',
+    let data1 = Object.keys(yCount).map(key => ([key, yCount[key]]));
+    let data2 = Object.keys(yCount).map(key => ({name: key, value: yCount[key]}));
+    console.log(data1)
+    switch (type) {
+        case 0:
+            var tableDom = $('#multipleChoiceTable' + index)
+            tableDom.css('display', 'block')
+            tableDom.empty()
+            tableDom.append(
+                `<table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>选项</th>
+                            <th>人数</th>
+                        </tr>
+                    </thead>
+                    <tbody id="multipleChoiceTableContent${index}">
+                    </tbody>
+                </table>`
+            )
+            var table = document.getElementById('multipleChoiceTableContent' + index);
+            for (let i = 0; i < data1.length; i++) {
+                let tr = document.createElement('tr');
+                let td1 = document.createElement('td');
+                let td2 = document.createElement('td');
+                td1.innerHTML = data1[i][0];
+                td2.innerHTML = data1[i][1];
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                table.appendChild(tr);
+            }
+            break;
+        case 1:
+            option = {
+                xAxis: {
+                    type: 'category',
+                    data: xData
                 },
-            },
-        ],
-    };
-    option && myChart.setOption(option);
+                yAxis: {
+                    type: 'value',
+                },
+                series: [
+                    {
+                        data: data1,
+                        type: 'bar',
+                        showBackground: true,
+                        backgroundStyle: {
+                            color: 'rgba(180, 180, 180, 0.2)',
+                        },
+                    },
+                ],
+            };
+            break;
+        case 2: // 饼状图
+            option = {
+                title: {
+                    text: problem.problemName,
+                    left: 'center',
+                    top: 20,
+                },
+                tooltip: {
+                    trigger: 'item',
+                },
+                legend: {},
+                series: [
+                    {
+                        type: 'pie',
+                        radius: '50%',
+                        data: data2,
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                            }
+                        }
+                    }
+                ]
+            };
+            break;
+    }
+
+    if(type !=0){
+        option && myChart.setOption(option);
+    }
 };
 
 const handleFillBlank = (index, problem) => {
