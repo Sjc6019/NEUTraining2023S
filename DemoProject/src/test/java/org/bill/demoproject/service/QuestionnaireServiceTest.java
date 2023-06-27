@@ -8,11 +8,12 @@ import org.bill.demoproject.common.utils.UUIDUtil;
 import org.bill.demoproject.dao.QuestionnaireEntityMapper;
 import org.bill.demoproject.dao.entity.QuestionnaireEntity;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-
+@SpringBootTest
 class QuestionnaireServiceTest {
 
     @Test

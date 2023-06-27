@@ -7,9 +7,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.bill.demoproject.beans.AnswerEntity;
 import org.bill.demoproject.dao.AnswerSheetEntityMapper;
 import org.bill.demoproject.dao.entity.AnswerSheetEntity;
-import org.junit.Test;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,12 +15,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.*;
-@SpringBootTest
-public class AnswerSheetServiceTest {
+import static org.junit.jupiter.api.Assertions.*;
+
+class AnswerSheetServiceTest {
 
     @Test
-    public void queryAnswerSheet() throws IOException {
+    void queryAnswerSheet() throws IOException {
         String resource = "mybatis-config.xml";
         InputStream inputStream = Resources.getResourceAsStream(resource);
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
@@ -48,11 +46,10 @@ public class AnswerSheetServiceTest {
         }
         sqlSession.close();
 
-
     }
 
     @Test
-    public void addAnswerSheet() throws IOException {
+    void addAnswerSheet() throws IOException {
         String resource = "mybatis-config.xml";
         InputStream inputStream = Resources.getResourceAsStream(resource);
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
@@ -78,7 +75,7 @@ public class AnswerSheetServiceTest {
     }
 
     @Test
-    public void deleteAnswerSheetById() throws IOException {
+    void deleteAnswerSheetById() throws IOException {
         String resource = "mybatis-config.xml";
         InputStream inputStream = Resources.getResourceAsStream(resource);
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
@@ -109,5 +106,6 @@ public class AnswerSheetServiceTest {
             }
         }
         sqlSession.close();
+
     }
 }
