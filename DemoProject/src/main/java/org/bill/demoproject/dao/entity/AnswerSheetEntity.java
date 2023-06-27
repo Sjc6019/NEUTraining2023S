@@ -52,4 +52,15 @@ public class AnswerSheetEntity {
     public void setAnswerTime(Date answerTime) {
         this.answerTime = answerTime;
     }
+
+    @Override
+    public String toString() {
+        return "AnswerSheetEntity{" +
+                "\"id\":\"" + id + '\"' +
+                ", \"answerUser\":\"" + answerUser + '\"' +
+                ", \"questionnaireId\":\"" + questionnaireId + '\"' +
+                ", \"answer\":" + answer +
+                ", \"answerTime\":\"" + answerTime + '\"' +
+                '}';
+    }
 }

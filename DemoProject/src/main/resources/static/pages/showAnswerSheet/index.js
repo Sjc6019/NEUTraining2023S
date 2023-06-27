@@ -266,6 +266,7 @@ const loadAnswer = (answerid) => {
         }).then(res => {
           console.log(res);
           let type = res.data[0].problemType
+          
           console.log(type)
           switch (type) {
             case 1:

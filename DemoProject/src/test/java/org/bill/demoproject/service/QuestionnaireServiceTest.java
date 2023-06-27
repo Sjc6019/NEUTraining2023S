@@ -50,6 +50,7 @@ class QuestionnaireServiceTest {
         questionnaireEntity.setQuestionnaireName("test-service-add-1");
         questionnaireEntity.setQuestionnaireDescription("test-service-add-1");
         questionnaireEntity.setCreatedBy("admin");
+        questionnaireEntity.setStatus("1");
         questionnaireEntity.setCreationDate(new java.sql.Date(new java.util.Date().getTime()));
         questionnaireEntity.setLastUpdatedBy("admin");
         questionnaireEntity.setLastUpdatedDate(new java.sql.Date(new java.util.Date().getTime()));
@@ -74,6 +75,7 @@ class QuestionnaireServiceTest {
         questionnaireEntity.setQuestionnaireName("test-service-add-temp-1");
         questionnaireEntity.setQuestionnaireDescription("test-service-add-temp-1");
         questionnaireEntity.setCreatedBy("admin");
+        questionnaireEntity.setStatus("1");
         questionnaireEntity.setCreationDate(new java.sql.Date(new java.util.Date().getTime()));
         questionnaireEntity.setLastUpdatedBy("admin");
         questionnaireEntity.setLastUpdatedDate(new java.sql.Date(new java.util.Date().getTime()));
@@ -106,6 +108,7 @@ class QuestionnaireServiceTest {
         questionnaireEntity.setQuestionnaireName("test-service-add-temp-2");
         questionnaireEntity.setQuestionnaireDescription("test-service-add-temp-2");
         questionnaireEntity.setCreatedBy("admin");
+        questionnaireEntity.setStatus("1");
         questionnaireEntity.setCreationDate(new java.sql.Date(new java.util.Date().getTime()));
         questionnaireEntity.setLastUpdatedBy("admin");
         questionnaireEntity.setLastUpdatedDate(new java.sql.Date(new java.util.Date().getTime()));
