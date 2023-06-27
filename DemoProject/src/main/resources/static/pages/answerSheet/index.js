@@ -30,7 +30,7 @@ const fetchProblem = (questionnaireId) => {
 };
 
 const loadProblem = () => {
-  function loadQuestion(type, option) {
+  function loadQuestion(type, option, problemIndex) {
     let question = '';
     let length = option.length;
     switch (type) {
@@ -40,7 +40,7 @@ const loadProblem = () => {
           question += `
                 <div style="display: flex; align-items: center; margin-bottom: 3px;">
                 <label class="radio-inline">
-                    <input type="radio" name="chooseTerm" value="${item.chooseTerm}" />${item.chooseTerm}
+                    <input type="radio" name="chooseTerm${problemIndex}" value="${item.chooseTerm}" />${item.chooseTerm}
                 </label>
                 </div>
                 `;
@@ -52,7 +52,7 @@ const loadProblem = () => {
           question += `
                 <div style="display: flex; align-items: center; margin-bottom: 3px;">
                 <label class="checkbox-inline">
-                    <input type="checkbox" name="chooseTerm${optionIndex}" value="${item.chooseTerm}"/>${item.chooseTerm}
+                    <input type="checkbox" name="chooseTerm${problemIndex}" value="${item.chooseTerm}"/>${item.chooseTerm}
                 </label>
                 </div>
                 `;
@@ -169,7 +169,7 @@ const loadProblem = () => {
                 }
             </div>
             <div class="bottom">
-                ${loadQuestion(type, option)}
+                ${loadQuestion(type, option, problemIndex)}
             </div>
             </div>
         `;
