@@ -1,24 +1,25 @@
 package org.bill.demoproject.controller;
 
 import jakarta.annotation.Resource;
+import org.bill.demoproject.beans.AnswerEntity;
 import org.bill.demoproject.beans.HttpResponseEntity;
 import org.bill.demoproject.dao.entity.QuestionnaireEntity;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.*;
+import java.util.ArrayList;
+import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class QuestionnaireControllerTest {
-
+class QuestionnaireControllerTest {
     @Resource
     private QuestionnaireController questionnaireController;
-
     @Test
-    public void queryQuestionnaireInfo() {
+    void queryQuestionnaireInfo() {
         QuestionnaireEntity questionnaireEntity = new QuestionnaireEntity();
         questionnaireEntity.setQuestionnaireName("test");
         HttpResponseEntity httpResponseEntity = questionnaireController.queryQuestionnaireInfo(questionnaireEntity);
@@ -29,10 +30,10 @@ public class QuestionnaireControllerTest {
     }
 
     @Test
-    public void addQuestionnaireInfo() {
+    void addQuestionnaireInfo() {
         QuestionnaireEntity questionnaireEntity = new QuestionnaireEntity();
         questionnaireEntity.setQuestionnaireName("test-junit-add");
-        questionnaireEntity.setProjectId("dawfgfsdegrsrhgsrg");
+        questionnaireEntity.setProjectId("dawfgfg");
         questionnaireEntity.setStatus("1");
         HttpResponseEntity httpResponseEntity = questionnaireController.addQuestionnaireInfo(questionnaireEntity);
         System.out.println(httpResponseEntity.getData());
@@ -43,59 +44,65 @@ public class QuestionnaireControllerTest {
         questionnaireEntity.setId(id);
         HttpResponseEntity httpResponseEntity2 = questionnaireController.deleteQuestionnaireById(questionnaireEntity);
         System.out.println(httpResponseEntity2.getData());
-        questionnaireEntity.setQuestionnaireName(null);
+        questionnaireEntity.setStatus(null);
         HttpResponseEntity httpResponseEntity3 = questionnaireController.addQuestionnaireInfo(questionnaireEntity);
         System.out.println(httpResponseEntity3.getData());
+
     }
 
     @Test
-    public void modifyQuestionnaireInfo() {
+    void modifyQuestionnaireInfo() {
         QuestionnaireEntity questionnaireEntity = new QuestionnaireEntity();
-        questionnaireEntity.setQuestionnaireName("test-junit-modify");
-        questionnaireEntity.setProjectId("dawfgfsdegrsrhgsrg");
+        questionnaireEntity.setId("testID");
+        questionnaireEntity.setProjectId("dawfgfsd");
         questionnaireEntity.setStatus("1");
+
         HttpResponseEntity httpResponseEntity = questionnaireController.addQuestionnaireInfo(questionnaireEntity);
         System.out.println(httpResponseEntity.getData());
         HttpResponseEntity httpResponseEntity1 = questionnaireController.queryQuestionnaireInfo(questionnaireEntity);
         String result = httpResponseEntity1.getData().toString();
-        String id = result.substring(result.indexOf("\"id\":")+6,result.indexOf(", \"questionnaireName\"")-1);
+        System.out.println(result);
+        String id = result.substring(result.indexOf("\"id\":")+6,result.indexOf(", \"projectId\"")-1);
         System.out.println(id);
         questionnaireEntity.setId(id);
-        questionnaireEntity.setQuestionnaireName("test-junit-modify-modify");
+        questionnaireEntity.setQuestionnaireName("testmodify");
         HttpResponseEntity httpResponseEntity2 = questionnaireController.modifyQuestionnaireInfo(questionnaireEntity);
         System.out.println(httpResponseEntity2.getData());
         HttpResponseEntity httpResponseEntity3 = questionnaireController.queryQuestionnaireInfo(questionnaireEntity);
         System.out.println(httpResponseEntity3.getData());
-        questionnaireEntity.setQuestionnaireName(null);
+
+        questionnaireEntity.setQuestionnaireName("testmodifytestmodifytestmodifytestmodifytestmodifytestmodifytestmodifytestmodifytestmodifytestmodifytestmodifytestmodify");
+        questionnaireEntity.setProjectId(null);
         HttpResponseEntity httpResponseEntity4 = questionnaireController.modifyQuestionnaireInfo(questionnaireEntity);
         System.out.println(httpResponseEntity4.getData());
-        HttpResponseEntity httpResponseEntity5 = questionnaireController.queryQuestionnaireInfo(questionnaireEntity);
+        HttpResponseEntity httpResponseEntity5 = questionnaireController.deleteQuestionnaireById(questionnaireEntity);
         System.out.println(httpResponseEntity5.getData());
-        HttpResponseEntity httpResponseEntity6 = questionnaireController.deleteQuestionnaireById(questionnaireEntity);
-        System.out.println(httpResponseEntity6.getData());
+
     }
 
     @Test
-    public void deleteQuestionnaireById() {
+    void deleteQuestionnaireById() {
         QuestionnaireEntity questionnaireEntity = new QuestionnaireEntity();
-        questionnaireEntity.setQuestionnaireName("test-junit-delete");
-        questionnaireEntity.setProjectId("dawfgfsdegrsrhgsrg");
+        questionnaireEntity.setId("testID");
+        questionnaireEntity.setProjectId("dawfgfsd");
+        questionnaireEntity.setQuestionnaireName("testdelete");
+
         questionnaireEntity.setStatus("1");
         HttpResponseEntity httpResponseEntity = questionnaireController.addQuestionnaireInfo(questionnaireEntity);
         System.out.println(httpResponseEntity.getData());
         HttpResponseEntity httpResponseEntity1 = questionnaireController.queryQuestionnaireInfo(questionnaireEntity);
         String result = httpResponseEntity1.getData().toString();
-        String id = result.substring(result.indexOf("\"id\":")+6,result.indexOf(", \"questionnaireName\"")-1);
+        System.out.println(result);
+        String id = result.substring(result.indexOf("\"id\":")+6,result.indexOf(", \"projectId\"")-1);
         System.out.println(id);
         questionnaireEntity.setId(id);
+
         HttpResponseEntity httpResponseEntity2 = questionnaireController.deleteQuestionnaireById(questionnaireEntity);
         System.out.println(httpResponseEntity2.getData());
-        HttpResponseEntity httpResponseEntity3 = questionnaireController.queryQuestionnaireInfo(questionnaireEntity);
-        System.out.println(httpResponseEntity3.getData());
-        questionnaireEntity.setQuestionnaireName(null);
+
+
+        questionnaireEntity.setId(null);
         HttpResponseEntity httpResponseEntity4 = questionnaireController.deleteQuestionnaireById(questionnaireEntity);
         System.out.println(httpResponseEntity4.getData());
-        HttpResponseEntity httpResponseEntity5 = questionnaireController.queryQuestionnaireInfo(questionnaireEntity);
-        System.out.println(httpResponseEntity5.getData());
     }
 }
