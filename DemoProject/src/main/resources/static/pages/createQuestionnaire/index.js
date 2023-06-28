@@ -4,7 +4,7 @@ onload = () => {
 
   let projectId = $util.getPageParam('createQuestionnaire')
     console.log(projectId, 'projectId')
-  fetchProjectList()
+  fetchProjectList(projectId)
 }
 
 const onCreateTemplate = () => {
@@ -72,7 +72,7 @@ const handleEdit = () => {
   open('/pages/designQuestionnaire/index.html')
 }
 
-const fetchProjectList = () => {
+const fetchProjectList = (id) => {
   $.ajax({
     url: API_BASE_URL + '/queryProjectList',
     type: 'POST',
@@ -96,6 +96,7 @@ const fetchProjectList = () => {
       res.data.map((item, index) => {
         selectElement.append(`<option value="${item.id}">${item.projectName}</option>`)
       })
+      selectElement.val(id)
     }
   })
 

@@ -89,6 +89,7 @@ const fetchProblemListByType = (id) => {
                             pieButton.onclick = function () {
                                 handleSingleChoice(index, item,2)
                             }
+                            handleSingleChoice(index, item, 0)
                             break;
                         case 2:
                             $('#multipleChoiceContainer').append(
@@ -118,6 +119,7 @@ const fetchProblemListByType = (id) => {
                             pieButton.onclick = function () {
                                 handleMultipleChoice(index, item,2)
                             }
+                            handleMultipleChoice(index, item, 0)
                             break;
                         case 3:
                             $('#textContainer').append(

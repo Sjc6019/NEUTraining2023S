@@ -132,6 +132,9 @@ const loadProblem = () => {
                     : '<span class="must-answer" id="mustAnswer">选答题</span>'
                 }
             </div>
+            <div class="middle">
+                <div class="title">${title}</div>
+            </div>
             <div class="bottom">
                 <table class="table table-bordered">
                     <thead>
@@ -167,6 +170,9 @@ const loadProblem = () => {
                     ? '<span class="must-answer" id="mustAnswer">必答题</span>'
                     : '<span class="must-answer" id="mustAnswer">选答题</span>'
                 }
+            </div>
+            <div class="middle">
+                <div class="title">${problemIndex}.${title}</div>
             </div>
             <div class="bottom">
                 ${loadQuestion(type, option, problemIndex)}

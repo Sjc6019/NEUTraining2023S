@@ -64,7 +64,6 @@ const fetchProjectInfo = (id) => {
                     $('#url').attr('href', url)
                     $('#myModal').modal('show')
                     releaseQuestionnaire(item.id)
-                    
                 });
                 operationTd.append(operationBtn1);
                 let operationBtn2 = $("<button></button>").text("预览").addClass("btn btn-primary");
@@ -136,7 +135,6 @@ const releaseQuestionnaire = (id) => {
         contentType: "application/json",
         success(res) {
             console.log("res", res)
-            window.location.reload()
         }
     })
 }
