@@ -125,9 +125,10 @@ const deleteQuestionnaire = (id) => {
 }
 
 const releaseQuestionnaire = (id) => {
+    let date = new Date().getTime()
     let params = {
         id,
-        releaseTime: new Date()
+        releaseTime: date
     }
     $.ajax({
         url: API_BASE_URL + '/modifyQuestionnaireInfo',

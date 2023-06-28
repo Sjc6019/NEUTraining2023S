@@ -514,6 +514,10 @@ const handleEditFinish = () => {
     contentType: "application/json",
     success(res) {
       console.log(res)
+      if(res.code === "666") {
+        alert('添加成功')
+        window.location.href = '/pages/questionnaire/index.html'
+      }
     }
   })
 }

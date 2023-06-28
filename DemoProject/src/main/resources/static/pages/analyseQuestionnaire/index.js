@@ -36,9 +36,15 @@ const fetchQuestionnaireList = (id) => {
 const handleViewByType = () => {
     $('#problems').empty();
     $('#problems').append(
-        `<div id="singleChoiceContainer"></div>
-        <div id="multipleChoiceContainer"></div>
-        <div id="textContainer"></div>
+        `<div id="singleChoiceContainer"> 
+        <h3>单选题</h3>
+        </div>
+        <div id="multipleChoiceContainer">
+        <h3>多选题</h3>
+        </div>
+        <div id="textContainer">
+        <h3>填空题</h3>
+        </div>
         `,
     );
     fetchProblemListByType(questionnaireId);
@@ -73,8 +79,8 @@ const fetchProblemListByType = (id) => {
                                         <span><button class="btn btn-primary" id="barSingleChoice${index}">柱状图</button></span>
                                         <span><button class="btn btn-primary" id="pieSingleChoice${index}">饼状图</button></span>
                                     </div>
-                                    <div id="singleChoiceTable${index}" style="width: 600px;height:400px;"></div>                                    
-                                    <div id="singleChoice${index}" style="width: 600px;height:400px;"></div>
+                                    <div id="singleChoiceTable${index}" style="display:none;" ></div>                                    
+                                    <div id="singleChoice${index}" style="width: 600px;height:400px; display:none;" ></div>
                                 </div>`,
                             );
                             var tableButton = document.getElementById('tableSingleChoice' + index);
@@ -103,8 +109,8 @@ const fetchProblemListByType = (id) => {
                                         <span><button class="btn btn-primary" id="barMultipleChoice${index}">柱状图</button></span>
                                         <span><button class="btn btn-primary" id="pieMultipleChoice${index}">饼状图</button></span>
                                     </div>
-                                    <div id="multipleChoiceTable${index}" style="width: 600px;height:400px;"></div>
-                                    <div id="multipleChoice${index}" style="width: 600px;height:400px;"></div>
+                                    <div id="multipleChoiceTable${index}" style="display:none;" ></div>
+                                    <div id="multipleChoice${index}" style="width: 600px;height:400px; display:none;" ></div>
                                 </div>`,
                             );
                             var tableButton = document.getElementById('tableMultipleChoice' + index);
@@ -125,7 +131,7 @@ const fetchProblemListByType = (id) => {
                             $('#textContainer').append(
                                 `<div class="fillBlank"> 
                                     <div class="problem-title">
-                                        ${item.problemName}
+                                      <h5>题目${index+1}:${item.problemName}</h5>
                                     </div>
                                     <table  class="table table-bordered">
                                         <tbody id="fillBlank${index}">
@@ -176,8 +182,8 @@ const fetchProblemList = (id) => {
                                         <span><button class="btn btn-primary" id="barSingleChoice${index}">柱状图</button></span>
                                         <span><button class="btn btn-primary" id="pieSingleChoice${index}">饼状图</button></span>
                                     </div>
-                                    <div id="singleChoiceTable${index}" style="width: 600px;height:400px;"></div>                                    
-                                    <div id="singleChoice${index}" style="width: 600px;height:400px;"></div>
+                                    <div id="singleChoiceTable${index}" style="display:none;"></div>                                    
+                                    <div id="singleChoice${index}" style="width: 600px;height:400px; display:none;"></div>
                                 </div>`,
                             );
                             var tableButton = document.getElementById('tableSingleChoice' + index);
@@ -192,6 +198,7 @@ const fetchProblemList = (id) => {
                             pieButton.onclick = function () {
                                 handleSingleChoice(index, item,2)
                             }
+                            handleSingleChoice(index, item, 0)
                             break;
                         case 2:
                             $('#problems').append(
@@ -205,8 +212,8 @@ const fetchProblemList = (id) => {
                                         <span><button class="btn btn-primary" id="barMultipleChoice${index}">柱状图</button></span>
                                         <span><button class="btn btn-primary" id="pieMultipleChoice${index}">饼状图</button></span>
                                     </div>
-                                    <div id="multipleChoiceTable${index}" style="width: 600px;height:400px;"></div>
-                                    <div id="multipleChoice${index}" style="width: 600px;height:400px;"></div>
+                                    <div id="multipleChoiceTable${index}" style="display:none;"></div>
+                                    <div id="multipleChoice${index}" style="width: 600px;height:400px; display:none;"></div>
                                 </div>`,
                             );
                             var tableButton = document.getElementById('tableMultipleChoice' + index);
@@ -221,12 +228,13 @@ const fetchProblemList = (id) => {
                             pieButton.onclick = function () {
                                 handleMultipleChoice(index, item,2)
                             }
+                            handleMultipleChoice(index, item, 0)
                             break;
                         case 3:
                             $('#problems').append(
                                 `<div class="fillBlank"> 
                                     <div class="problem-title">
-                                        ${item.problemName}
+                                        <h5>题目${index+1}:${item.problemName}</h5>
                                     </div>
                                     <table  class="table table-bordered">
                                         <tbody id="fillBlank${index}">
