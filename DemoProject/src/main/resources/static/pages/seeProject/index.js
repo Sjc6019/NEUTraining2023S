@@ -21,8 +21,10 @@ const fetchProjectInfo = (id) => {
             let info = res.data[0]
             console.log(info, 'res')
             $('#projectName').text(info.projectName)
-            $('#createTime').text(info.creationTime)
+            $('#createTime').text(info.creationDate)
+            $('#personInCharge').text(info.createdBy)
             $('#projectDescription').text(info.projectContent)
+
         }
     })
     let params2 = {

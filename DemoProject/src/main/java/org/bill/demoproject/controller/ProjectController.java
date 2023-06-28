@@ -29,6 +29,7 @@ public class ProjectController {
         } else {
             httpResponseEntity.setCode("666");
             httpResponseEntity.setData(hasProject);
+            System.out.println(hasProject);
             httpResponseEntity.setMessage("success");
         }
         return httpResponseEntity;
