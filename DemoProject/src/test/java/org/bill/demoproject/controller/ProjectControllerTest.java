@@ -41,6 +41,7 @@ class ProjectControllerTest {
     void addProjectInfo() {
         ProjectEntity projectEntity = new ProjectEntity();
         projectEntity.setProjectName("test-junit-add");
+
         HttpResponseEntity httpResponseEntity = projectController.addProjectInfo(projectEntity);
         System.out.println(httpResponseEntity.getData());
         HttpResponseEntity httpResponseEntity1 = projectController.queryProjectList(projectEntity);
