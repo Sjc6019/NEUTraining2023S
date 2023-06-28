@@ -97,5 +97,5 @@ const getQuestionnaireName = (id) => {
 const analyse = () => {
     let questionnaireId = $util.getPageParam('questionnaireId');
     console.log(questionnaireId, 'questionnaireId');
-    location.href = "/pages/analyseQuestionnaire";
+    location.href = "/pages/analyseQuestionnaire/index.html";
 }
