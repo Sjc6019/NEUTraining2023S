@@ -11,15 +11,23 @@
     <select id="queryAnswerSheet" parameterType="org.bill.demoproject.dao.entity.AnswerSheetEntity"
             resultType="org.bill.demoproject.dao.entity.AnswerSheetEntity" resultMap="answerSheetMap">
         select id,
-               answer_user,
-               questionnaire_id,
-               answer,
-               answer_time
+        answer_user,
+        questionnaire_id,
+        answer,
+        answer_time
         from answer_sheet
-        where answer_sheet.answer_user like concat('%'
+        <if test="answerUser != null and questionnaireId != null">
+            where (answer_sheet.answer_user like concat('%'
             , #{answerUser}
-            , '%') or answer_sheet.questionnaire_id like concat('%' , #{questionnaireId} , '%')
-        or answer_sheet.id like concat('%' , #{id} , '%')
+            , '%') and questionnaire_id = #{questionnaireId})
+        </if>
+        <if test="answerUser == null and questionnaireId != null">
+            where questionnaire_id = #{questionnaireId}
+        </if>
+        <if test="id != null">
+            where answer_sheet.id like concat('%' , #{id} , '%')
+        </if>
+
     </select>
     <insert id="addAnswerSheet" parameterType="org.bill.demoproject.dao.entity.AnswerSheetEntity">
         insert into answer_sheet (id,
